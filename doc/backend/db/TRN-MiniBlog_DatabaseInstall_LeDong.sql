@@ -16,7 +16,7 @@ create table Account
 	acc_gender tinyint(1) not null, -- 1: male 0:female 2: others
 	acc_email varchar(50) not null,
 	acc_birthday timestamp not null,
-	acc_status tinyint(1) not null, -- default 1: active, 0 : hide
+	acc_status tinyint(1) not null, -- default 1: active, 0 : inactive
 	acc_role tinyint(1) not null, -- default 0 : user 1: admin
 	primary key(id_acc)
 );
