@@ -34,4 +34,4 @@ Thiết kế Wireframe (Paper) và Prototype (HTML Markup) dựa trên các ch�
 Thiết kế cơ sở dữ liệu (ERD, Table Design)
 Thiết kế API Spec, API Detail Design (Flow)
 Vẽ Sequence Diagram, Class Diagram
-etc..
+etc..ssss
