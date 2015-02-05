@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD//EN"
+                                         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+   <session-factory>
+   <property name="hibernate.dialect">
+      org.hibernate.dialect.MySQLDialect
+   </property>
+   <property name="hibernate.connection.driver_class">
+      com.mysql.jdbc.Driver
+   </property>
+
+   <!-- Assume test is the database name -->
+   <property name="hibernate.connection.url">
+      jdbc:mysql://localhost:3306/miniblog
+   </property>
+   <property name="hibernate.connection.username">
+      root
+   </property>
+   <property name="hibernate.connection.password">
+   </property>
+
+   <!-- List of XML mapping files -->
+  	<mapping class="com.mulodo.miniblog.model.Account"/>
+	<mapping class="com.mulodo.miniblog.model.Posts"/>
+	<mapping class="com.mulodo.miniblog.model.Comments"/>
+	<mapping class="com.mulodo.miniblog.model.Token"/>
+</session-factory>
+</hibernate-configuration>                             
