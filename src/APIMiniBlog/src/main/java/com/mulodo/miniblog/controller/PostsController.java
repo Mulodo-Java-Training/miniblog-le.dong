@@ -12,7 +12,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -73,17 +72,17 @@ public class PostsController {
 				Account a = accountService.getAccountByToken(accesstoken);
 				System.out.println(a.getId() + "----" + p.getAccount().getId());
 				if (a.getId() == p.getAccount().getId()) {
-						p.setStatus(true);
-						boolean result = postsService.update(p);
-						if (result) {
-							return Response
-									.status(Status.status_200)
-									.entity("Active posts success!Detail: "
-											+ p.isStatus()).build();
-						} else {
-							return Response.status(Status.status_3002)
-									.entity("Active Posts Failled!").build();
-						}
+					p.setStatus(true);
+					boolean result = postsService.update(p);
+					if (result) {
+						return Response
+								.status(Status.status_200)
+								.entity("Active posts success!Detail: "
+										+ p.isStatus()).build();
+					} else {
+						return Response.status(Status.status_3002)
+								.entity("Active Posts Failled!").build();
+					}
 				} else {
 					Response.status(Status.status_3008)
 							.entity("posts is not of account with token: "
@@ -109,17 +108,17 @@ public class PostsController {
 				Account a = accountService.getAccountByToken(accesstoken);
 				System.out.println(a.getId() + "----" + p.getAccount().getId());
 				if (a.getId() == p.getAccount().getId()) {
-						p.setStatus(false);
-						boolean result = postsService.update(p);
-						if (result) {
-							return Response
-									.status(Status.status_200)
-									.entity("Deactive posts success!Detail: "
-											+ p.isStatus()).build();
-						} else {
-							return Response.status(Status.status_3002)
-									.entity("Deactive Posts Failled!").build();
-						}
+					p.setStatus(false);
+					boolean result = postsService.update(p);
+					if (result) {
+						return Response
+								.status(Status.status_200)
+								.entity("Deactive posts success!Detail: "
+										+ p.isStatus()).build();
+					} else {
+						return Response.status(Status.status_3002)
+								.entity("Deactive Posts Failled!").build();
+					}
 				} else {
 					return Response
 							.status(Status.status_3008)
@@ -249,20 +248,17 @@ public class PostsController {
 	}
 
 	@GET
-	@Path("/getpostsofuser/{id_acc}")
+	@Path("/getpostsofuser")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getpostsofuser(@PathParam("id_acc") int id_acc) {
-		if (id_acc != 0) {
-			List<Posts> posts = postsService.getAllPostsByUser(id_acc);
-			if (posts != null) {
-				return Response.status(Status.status_200)
-						.entity("All Posts of User:" + posts).build();
-			} else {
-				return Response.status(Status.status_3006)
-						.entity("id_acc not existed!").build();
-			}
+	public Response getpostsofuser(@HeaderParam("token") String accesstoken) {
+
+		Account a = accountService.getAccountByToken(accesstoken);
+		List<Posts> posts = postsService.getAllPostsByUser(a.getId());
+		if (posts != null) {
+			return Response.status(Status.status_200)
+					.entity("All Posts of User:" + posts).build();
 		}
-		return Response.status(Status.status_1001).entity("id is required!")
-				.build();
+		return Response.status(Status.status_3006)
+				.entity("not found posts with account!!").build();
 	}
 }

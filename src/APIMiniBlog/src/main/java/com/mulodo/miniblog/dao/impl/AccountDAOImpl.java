@@ -8,11 +8,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.mulodo.miniblog.dao.AccountDAO;
 import com.mulodo.miniblog.model.Account;
-import com.mulodo.miniblog.util.MD5Hash;
 
 @Repository
 public class AccountDAOImpl implements AccountDAO{
@@ -33,7 +31,6 @@ public class AccountDAOImpl implements AccountDAO{
 		return false;
 		
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public Account login(String username, String password) {
 		Session session = this.sessionFactory.getCurrentSession();
@@ -44,7 +41,7 @@ public class AccountDAOImpl implements AccountDAO{
 		}
 		return null;
 	}
-	@SuppressWarnings("unchecked")
+
 	@Override
 	public Account findByID(int id) {
 		Session session = this.sessionFactory.getCurrentSession();
@@ -100,16 +97,18 @@ public class AccountDAOImpl implements AccountDAO{
 		return false;
 	}
 
-	@SuppressWarnings("unchecked")
+
 	@Override
 	public Account findByUsername(String username) {
 		Session session = this.sessionFactory.getCurrentSession();
-		Account acc = (Account) session.createCriteria(Account.class).add(Restrictions.eq("username",username)).list().get(0);
+//		Account acc = (Account) session.createCriteria(Account.class).add(Restrictions.eq("username",username)).list().get(0);
+		Query query = session.createQuery("from Account where username = '"+username+"'"); 
+		Account acc = (Account) query.uniqueResult();
 		try {
 			if(acc != null)
-			return acc;
+				return acc;
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println(e);
 		}
 		return null;
 	}

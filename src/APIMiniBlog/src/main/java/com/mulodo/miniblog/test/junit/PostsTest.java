@@ -15,12 +15,13 @@ import org.junit.Test;
 public class PostsTest {
 	static final String ROOT_URL = "http://localhost:8080/MiniBlog/posts/";
 	
-	/*
+	
 	@Test
 	public void testCreate() throws Exception {
 		try {
 			ClientRequest request = new ClientRequest(ROOT_URL + "create/");
 			request.accept("application/json");
+			request.header("token", "5O0cYcWjzUN1n98XeO17hVAuYtKpvzFKF4UB2Wxa");
 			request.formParameter("title", "[Champion League] Round of 16");
 			request.formParameter("content", "PSG - Chelsea");
 
@@ -59,6 +60,7 @@ public class PostsTest {
 		try {
 			ClientRequest request = new ClientRequest(ROOT_URL + "active/{id}");
 			request.accept("application/json");
+			request.header("token", "5O0cYcWjzUN1n98XeO17hVAuYtKpvzFKF4UB2Wxa");
 			request.pathParameter("id", 2);
 
 			ClientResponse<String> response = request.put(String.class);
@@ -95,6 +97,7 @@ public class PostsTest {
 		try {
 			ClientRequest request = new ClientRequest(ROOT_URL + "deactive/{id}");
 			request.accept("application/json");
+			request.header("token", "5O0cYcWjzUN1n98XeO17hVAuYtKpvzFKF4UB2Wxa");
 			request.pathParameter("id", 2);
 
 			ClientResponse<String> response = request.put(String.class);
@@ -130,9 +133,9 @@ public class PostsTest {
 	@Test
 	public void testUpdate() throws Exception {
 		try {
-			ClientRequest request = new ClientRequest(ROOT_URL + "update/{id}");
+			ClientRequest request = new ClientRequest(ROOT_URL + "update/");
 			request.accept("application/json");
-			request.pathParameter("id", 2);
+			request.header("token", "5O0cYcWjzUN1n98XeO17hVAuYtKpvzFKF4UB2Wxa");
 			request.formParameter("title", "[FA Cup]Round of 5");
 			request.formParameter("content", "MU 3-0 Cambridge");
 
@@ -170,6 +173,7 @@ public class PostsTest {
 		try {
 			ClientRequest request = new ClientRequest(ROOT_URL + "delete/{id}");
 			request.accept("application/json");
+			request.header("token", "5O0cYcWjzUN1n98XeO17hVAuYtKpvzFKF4UB2Wxa");
 			request.pathParameter("id", 2);
 
 			ClientResponse<String> response = request.delete(String.class);
@@ -200,7 +204,7 @@ public class PostsTest {
 
 		}
 	}
-	*/
+	
 	@Test
 	public void testGet() throws Exception {
 		try {
@@ -240,7 +244,8 @@ public class PostsTest {
 	@Test
 	public void testGetAll() throws Exception {
 		try {
-			ClientRequest request = new ClientRequest(ROOT_URL + "getall/");
+			ClientRequest request = new ClientRequest(ROOT_URL + "getallactive/");
+//			ClientRequest request = new ClientRequest(ROOT_URL + "getalldeactive/");
 			request.accept("application/json");
 
 			ClientResponse<String> response = request.get(String.class);
@@ -275,9 +280,9 @@ public class PostsTest {
 	@Test
 	public void testGetAllPostsForUser() throws Exception {
 		try {
-			ClientRequest request = new ClientRequest(ROOT_URL + "getpostsofuser/{id_acc}");
+			ClientRequest request = new ClientRequest(ROOT_URL + "getpostsofuser/");
 			request.accept("application/json");
-			request.pathParameter("id_acc", 4);
+			request.header("token", "5O0cYcWjzUN1n98XeO17hVAuYtKpvzFKF4UB2Wxa");
 			ClientResponse<String> response = request.get(String.class);
 			if (response.getStatus() != 200) {
 				throw new RuntimeException("Failed : HTTP error code : "

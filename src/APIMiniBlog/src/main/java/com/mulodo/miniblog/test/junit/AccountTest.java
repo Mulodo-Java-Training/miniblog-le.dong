@@ -23,9 +23,9 @@ public class AccountTest {
 		try {
 			ClientRequest request = new ClientRequest(ROOT_URL + "register/");
 			request.accept("application/json");
-			request.formParameter("username", "vykhuong");
-			request.formParameter("password", "vykhuong");
-			request.formParameter("email", "vykhuong@gmail.com");
+			request.formParameter("username", "leduyen");
+			request.formParameter("password", "leduyen");
+			request.formParameter("email", "leduyen@gmail.com");
 
 			ClientResponse<String> response = request.post(String.class);
 			if (response.getStatus() != 200) {
@@ -62,9 +62,8 @@ public class AccountTest {
 
 			ClientRequest request = new ClientRequest(ROOT_URL + "login/");
 			request.accept("application/json");
-			request.formParameter("u", "admin");
+			request.formParameter("u", "hoatrami");
 			request.formParameter("p", "123456");
-
 			ClientResponse<String> response = request.post(String.class);
 
 			if (response.getStatus() != 200) {
@@ -95,17 +94,18 @@ public class AccountTest {
 
 		}
 	}
-	
+	/*
 	@Test
 	public void testUpdate() throws Exception {
 		try {
-			ClientRequest request = new ClientRequest(ROOT_URL + "update/{id}");
+			ClientRequest request = new ClientRequest(ROOT_URL + "update/");
 			request.accept("application/json");
-			request.pathParameter("id", 4);
+			request.header("token", "5O0cYcWjzUN1n98XeO17hVAuYtKpvzFKF4UB2Wxa");
 			request.formParameter("username", "vykhuong");
 			request.formParameter("email", "vykhuong@gmail.com");
 			request.formParameter("lastname", "vy khuong");
 			request.formParameter("firstname", "truong");
+			request.formParameter("password", "vykhuong");
 
 			ClientResponse<String> response = request.put(String.class);
 			if (response.getStatus() != 200) {
@@ -176,9 +176,9 @@ public class AccountTest {
 	@Test
 	public void testChangePass() throws Exception {
 		try {
-			ClientRequest request = new ClientRequest(ROOT_URL + "changepass/{id}");
+			ClientRequest request = new ClientRequest(ROOT_URL + "changepass/");
 			request.accept("application/json");
-			request.pathParameter("id", 4);
+			request.header("token", "5O0cYcWjzUN1n98XeO17hVAuYtKpvzFKF4UB2Wxa");
 			request.formParameter("oldpass", "vykhuong");
 			request.formParameter("newpass", "password");
 
@@ -246,7 +246,7 @@ public class AccountTest {
 
 		}
 	}
-	*/
+	
 	@Test
 	public void testLogout() throws Exception {
 		try {
@@ -281,5 +281,7 @@ public class AccountTest {
 
 		}
 	}
+	
+	*/
 	
 }

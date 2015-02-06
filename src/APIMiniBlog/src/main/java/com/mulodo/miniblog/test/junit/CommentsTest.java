@@ -13,13 +13,14 @@ import org.junit.Test;
 public class CommentsTest {
 static final String ROOT_URL = "http://localhost:8080/MiniBlog/posts/";
 	
-	/*
+	
 	@Test
 	public void testAddComments() throws Exception {
 		try {
-			ClientRequest request = new ClientRequest(ROOT_URL + "{id_posts}/add/");
+			ClientRequest request = new ClientRequest(ROOT_URL + "{id_posts}/comments/add/");
 			request.accept("application/json");
 			request.pathParameter("id_posts", 1);
+			request.header("token", "5O0cYcWjzUN1n98XeO17hVAuYtKpvzFKF4UB2Wxa");
 			request.formParameter("comment", "Arsenal win!!!chaizo chaizo....");
 
 			ClientResponse<String> response = request.post(String.class);
@@ -55,10 +56,11 @@ static final String ROOT_URL = "http://localhost:8080/MiniBlog/posts/";
 	@Test
 	public void testEditComments() throws Exception {
 		try {
-			ClientRequest request = new ClientRequest(ROOT_URL + "{id_posts}/edit/{id}/");
+			ClientRequest request = new ClientRequest(ROOT_URL + "{id_posts}/comments/update/{id}/");
 			request.accept("application/json");
 			request.pathParameter("id_posts", 1);
 			request.pathParameter("id", 2);
+			request.header("token", "5O0cYcWjzUN1n98XeO17hVAuYtKpvzFKF4UB2Wxa");
 			request.formParameter("comment", "Arsenal losts!!!yeah yeah");
 
 			ClientResponse<String> response = request.put(String.class);
@@ -94,10 +96,11 @@ static final String ROOT_URL = "http://localhost:8080/MiniBlog/posts/";
 	@Test
 	public void testDeleteComments() throws Exception {
 		try {
-			ClientRequest request = new ClientRequest(ROOT_URL + "{id_posts}/delete/{id}/");
+			ClientRequest request = new ClientRequest(ROOT_URL + "{id_posts}/comments/delete/{id}/");
 			request.accept("application/json");
 			request.pathParameter("id_posts", 1);
 			request.pathParameter("id", 2);
+			request.header("token", "5O0cYcWjzUN1n98XeO17hVAuYtKpvzFKF4UB2Wxa");
 
 			ClientResponse<String> response = request.delete(String.class);
 			if (response.getStatus() != 200) {
@@ -127,13 +130,13 @@ static final String ROOT_URL = "http://localhost:8080/MiniBlog/posts/";
 
 		}
 	}
-	*/
+	
 	@Test
 	public void testGetAllCommentsForUser() throws Exception {
 		try {
-			ClientRequest request = new ClientRequest(ROOT_URL + "comments/getcommentsofuser/{id_acc}/");
+			ClientRequest request = new ClientRequest(ROOT_URL + "comments/getcommentsofuser/");
 			request.accept("application/json");
-			request.pathParameter("id_acc", 3);
+			request.header("token", "5O0cYcWjzUN1n98XeO17hVAuYtKpvzFKF4UB2Wxa");
 			ClientResponse<String> response = request.get(String.class);
 			if (response.getStatus() != 200) {
 				throw new RuntimeException("Failed : HTTP error code : "

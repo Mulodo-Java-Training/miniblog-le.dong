@@ -2,8 +2,6 @@ package com.mulodo.miniblog.service.impl;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.Context;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,8 +21,6 @@ public class AccountServiceImpl implements AccountService{
 	@Autowired
 	TokenService tokenService;
 	
-	@Context
-	HttpServletRequest request;
 	
 	@Transactional
 	public boolean register(Account acc) {
@@ -110,14 +106,16 @@ public class AccountServiceImpl implements AccountService{
 		try {
 			Account a = accountDAO.findByUsername(username);
 			if(a == null)
+			{
 				return true;
+			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 		return false;
 	}
 
-	@Override
+	@Transactional
 	public Account findByUsername(String username) {
 		// TODO Auto-generated method stub
 		try {
@@ -134,7 +132,7 @@ public class AccountServiceImpl implements AccountService{
 	@Transactional
 	public void logout(String attribute) {
 		
-		request.getSession().removeAttribute(attribute);
+		
 	}
 	
 	@Transactional

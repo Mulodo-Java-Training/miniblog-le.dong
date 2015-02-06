@@ -3,8 +3,7 @@ package com.mulodo.miniblog.controller;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -14,7 +13,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -38,11 +36,9 @@ public class CommentsController {
 	private CommentsService commentsService;
 	@Autowired
 	private PostsService postsService;
-	@Context
-	HttpSession session;
 
 	@POST
-	@Path("/{id_posts}/add")
+	@Path("/{id_posts}/comments/add")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response create(@PathParam("id_posts") int id_posts,
 			@FormParam("comment") String comment,
@@ -69,7 +65,7 @@ public class CommentsController {
 	}
 
 	@PUT
-	@Path("/{id_posts}/edit/{id}")
+	@Path("/{id_posts}/comments/update/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response update(@PathParam("id") int id,
 			@PathParam("id_posts") int id_posts,
@@ -108,7 +104,7 @@ public class CommentsController {
 	}
 
 	@DELETE
-	@Path("/{id_posts}/delete/{id}")
+	@Path("/{id_posts}/comments/delete/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response delete(@PathParam("id") int id,
 			@PathParam("id_posts") int id_posts,
@@ -149,21 +145,19 @@ public class CommentsController {
 	}
 
 	@GET
-	@Path("/comments/getcommentsofuser/{id_acc}")
+	@Path("/comments/getcommentsofuser")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getcommentsofuser(@PathParam("id_acc") int id_acc) {
-		if (id_acc != 0) {
-			List<Comments> comments = commentsService.getCommentsOfUser(id_acc);
+	public Response getcommentsofuser(@HeaderParam("token") String accesstoken) {
+		Account a = accountService.getAccountByToken(accesstoken);
+			List<Comments> comments = commentsService.getCommentsOfUser(a.getId());
 			if (comments != null) {
 				return Response.status(Status.status_200)
 						.entity("All Comments of User:" + comments).build();
 			} else {
 				return Response.status(Status.status_4005)
-						.entity("id_acc not existed!").build();
+						.entity("not found comments with account!").build();
 			}
-		}
-		return Response.status(Status.status_1001)
-				.entity("id_acc is required!").build();
+		
 	}
 
 	@GET
