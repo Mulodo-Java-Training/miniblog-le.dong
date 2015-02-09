@@ -170,7 +170,7 @@ public class Comments {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "[ "+comment+"-"+create_at+" ]";
+		return "[ "+comment+"-"+create_at+"-"+modified_at+" ]";
 	}
 	
 }

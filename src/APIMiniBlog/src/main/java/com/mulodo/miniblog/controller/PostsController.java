@@ -50,14 +50,14 @@ public class PostsController {
 			p.setAccount(accountService.getAccountByToken(accesstoken));
 			boolean result = postsService.create(p);
 			if (result) {
-				return Response.status(Status.status_200)
+				return Response.status(Status.STATUS_200)
 						.entity("Create posts success!Detail: " + p).build();
 			} else {
-				return Response.status(Status.status_3001)
+				return Response.status(Status.STATUS_3001)
 						.entity("create posts failled!").build();
 			}
 		}
-		return Response.status(Status.status_1001)
+		return Response.status(Status.STATUS_1001)
 				.entity("title and content and accesstoken required!:").build();
 	}
 
@@ -70,30 +70,29 @@ public class PostsController {
 			Posts p = postsService.get(id);
 			if (p != null) {
 				Account a = accountService.getAccountByToken(accesstoken);
-				System.out.println(a.getId() + "----" + p.getAccount().getId());
 				if (a.getId() == p.getAccount().getId()) {
 					p.setStatus(true);
 					boolean result = postsService.update(p);
 					if (result) {
 						return Response
-								.status(Status.status_200)
+								.status(Status.STATUS_200)
 								.entity("Active posts success!Detail: "
 										+ p.isStatus()).build();
 					} else {
-						return Response.status(Status.status_3002)
+						return Response.status(Status.STATUS_3002)
 								.entity("Active Posts Failled!").build();
 					}
 				} else {
-					Response.status(Status.status_3008)
+					return Response.status(Status.STATUS_3008)
 							.entity("posts is not of account with token: "
 									+ accesstoken).build();
 				}
 			} else {
-				return Response.status(Status.status_3005)
+				return Response.status(Status.STATUS_3005)
 						.entity("id not existed!").build();
 			}
 		}
-		return Response.status(Status.status_1001)
+		return Response.status(Status.STATUS_1001)
 				.entity("id and accesstoken is required!").build();
 	}
 
@@ -106,31 +105,30 @@ public class PostsController {
 			Posts p = postsService.get(id);
 			if (p != null) {
 				Account a = accountService.getAccountByToken(accesstoken);
-				System.out.println(a.getId() + "----" + p.getAccount().getId());
 				if (a.getId() == p.getAccount().getId()) {
 					p.setStatus(false);
 					boolean result = postsService.update(p);
 					if (result) {
 						return Response
-								.status(Status.status_200)
+								.status(Status.STATUS_200)
 								.entity("Deactive posts success!Detail: "
 										+ p.isStatus()).build();
 					} else {
-						return Response.status(Status.status_3002)
+						return Response.status(Status.STATUS_3002)
 								.entity("Deactive Posts Failled!").build();
 					}
 				} else {
 					return Response
-							.status(Status.status_3008)
+							.status(Status.STATUS_3008)
 							.entity("posts is not of account with token: "
 									+ accesstoken).build();
 				}
 			} else {
-				return Response.status(Status.status_3005)
+				return Response.status(Status.STATUS_3005)
 						.entity("id not existed!").build();
 			}
 		}
-		return Response.status(Status.status_1001)
+		return Response.status(Status.STATUS_1001)
 				.entity("id and accesstoken is required!").build();
 	}
 
@@ -145,32 +143,31 @@ public class PostsController {
 			Posts p = postsService.get(id);
 			if (p != null) {
 				Account a = accountService.getAccountByToken(accesstoken);
-				System.out.println(a.getId() + "----" + p.getAccount().getId());
 				if (a.getId() == p.getAccount().getId()) {
 					p.setTitle(title);
 					p.setContent(content);
 					p.setModified_at(new Date());
 					boolean result = postsService.update(p);
 					if (result) {
-						return Response.status(Status.status_200)
+						return Response.status(Status.STATUS_200)
 								.entity("Update posts success!Detail: " + p)
 								.build();
 					} else {
-						return Response.status(Status.status_3003)
+						return Response.status(Status.STATUS_3003)
 								.entity("update Posts Failled!").build();
 					}
 				} else {
 					return Response
-							.status(Status.status_3008)
+							.status(Status.STATUS_3008)
 							.entity("posts is not of account with token: "
 									+ accesstoken).build();
 				}
 			} else {
-				return Response.status(Status.status_3005)
+				return Response.status(Status.STATUS_3005)
 						.entity("id not existed!").build();
 			}
 		}
-		return Response.status(Status.status_1001)
+		return Response.status(Status.STATUS_1001)
 				.entity("id,title,content,accesstoken is required!").build();
 	}
 
@@ -186,25 +183,25 @@ public class PostsController {
 				if (a.getId() == p.getAccount().getId()) {
 					boolean result = postsService.delete(p);
 					if (result) {
-						return Response.status(Status.status_200)
-								.entity("delete posts success!ID: " + id)
+						return Response.status(Status.STATUS_200)
+								.entity("delete posts success!")
 								.build();
 					} else {
-						return Response.status(Status.status_3004)
+						return Response.status(Status.STATUS_3004)
 								.entity("delete Posts Failled!").build();
 					}
 				} else {
 					return Response
-							.status(Status.status_3008)
+							.status(Status.STATUS_3008)
 							.entity("posts is not of account with token: "
 									+ accesstoken).build();
 				}
 			} else {
-				return Response.status(Status.status_3005)
+				return Response.status(Status.STATUS_3005)
 						.entity("id not existed!").build();
 			}
 		}
-		return Response.status(Status.status_1001)
+		return Response.status(Status.STATUS_1001)
 				.entity("id and accesstoken is required!").build();
 	}
 
@@ -214,51 +211,51 @@ public class PostsController {
 		if (id != 0) {
 			Posts p = postsService.get(id);
 			if (p != null) {
-				return Response.status(Status.status_200).entity("Info:" + p)
+				return Response.status(Status.STATUS_200).entity("Info:" + p)
 						.build();
 			} else {
-				return Response.status(Status.status_3005)
+				return Response.status(Status.STATUS_3005)
 						.entity("id not existed!").build();
 			}
 		}
-		return Response.status(Status.status_1001).entity("id is required!")
+		return Response.status(Status.STATUS_1001).entity("id is required!")
 				.build();
 	}
 
 	@GET
 	@Path("/getallactive")
-	public Response getall() {
+	public Response getAllActive() {
 		List<Posts> posts = postsService.getAllPostsActive();
 		if (posts != null) {
-			return Response.status(Status.status_200).entity("Data:" + posts)
+			return Response.status(Status.STATUS_200).entity("Data:" + posts)
 					.build();
 		}
-		return Response.status(Status.status_3007).entity("No Data").build();
+		return Response.status(Status.STATUS_3007).entity("No Data").build();
 	}
 
 	@GET
 	@Path("/getalldeactive")
-	public Response getalldeactive() {
+	public Response getAllDeactive() {
 		List<Posts> posts = postsService.getAllPostsDeactive();
 		if (posts != null) {
-			return Response.status(Status.status_200).entity("Data:" + posts)
+			return Response.status(Status.STATUS_200).entity("Data:" + posts)
 					.build();
 		}
-		return Response.status(Status.status_3007).entity("No Data").build();
+		return Response.status(Status.STATUS_3007).entity("No Data").build();
 	}
 
 	@GET
 	@Path("/getpostsofuser")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getpostsofuser(@HeaderParam("token") String accesstoken) {
+	public Response getPostsOfUser(@HeaderParam("token") String accesstoken) {
 
 		Account a = accountService.getAccountByToken(accesstoken);
 		List<Posts> posts = postsService.getAllPostsByUser(a.getId());
 		if (posts != null) {
-			return Response.status(Status.status_200)
+			return Response.status(Status.STATUS_200)
 					.entity("All Posts of User:" + posts).build();
 		}
-		return Response.status(Status.status_3006)
+		return Response.status(Status.STATUS_3006)
 				.entity("not found posts with account!!").build();
 	}
 }

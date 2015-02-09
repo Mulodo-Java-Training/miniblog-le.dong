@@ -24,6 +24,7 @@ import com.mulodo.miniblog.model.Token;
 import com.mulodo.miniblog.model.Account;
 import com.mulodo.miniblog.service.AccountService;
 import com.mulodo.miniblog.util.MD5Hash;
+import com.mulodo.miniblog.util.SendMail;
 import com.mulodo.miniblog.util.Status;
 import com.mulodo.miniblog.util.Util;
 
@@ -51,15 +52,15 @@ public class AccountController {
 				t.setExpired_at(new Date());
 				t.setAccount(a);
 				accountService.createToken(t);
-				return Response.status(Status.status_200)
+				return Response.status(Status.STATUS_200)
 						.entity("Access Token:" + t.getAccess_token() + " ")
 						.build();
 			} else {
-				return Response.status(Status.status_2002)
+				return Response.status(Status.STATUS_2002)
 						.entity("username or password wrong").build();
 			}
 		}
-		return Response.status(Status.status_1001)
+		return Response.status(Status.STATUS_1001)
 				.entity("username and password required!").build();
 	}
 
@@ -70,7 +71,6 @@ public class AccountController {
 			@FormParam("password") String password,
 			@FormParam("email") String email) {
 		if (username != null && password != null && email != null) {
-			
 			Account a = new Account();
 			a.setUsername(username);
 			a.setPassword(MD5Hash.MD5(password));
@@ -83,17 +83,17 @@ public class AccountController {
 			if (result) {
 				boolean result2 = accountService.register(a);
 				if (result2)
-					return Response.status(Status.status_200)
+					return Response.status(Status.STATUS_200)
 							.entity("Details Accounts:" + a).build();
 				else
-					return Response.status(Status.status_2009)
+					return Response.status(Status.STATUS_2009)
 							.entity("register failled").build();
 			} else {
-				return Response.status(Status.status_2001)
+				return Response.status(Status.STATUS_2001)
 						.entity("username is existed!").build();
 			}
 		}
-		return Response.status(Status.status_1001)
+		return Response.status(Status.STATUS_1001)
 				.entity("username, password,email required!").build();
 	}
 
@@ -104,14 +104,14 @@ public class AccountController {
 		if (id != 0) {
 			Account a = this.accountService.getInfo(id);
 			if (a != null) {
-				return Response.status(Status.status_200).entity("Info:" + a)
+				return Response.status(Status.STATUS_200).entity("Info:" + a)
 						.build();
 			} else {
-				return Response.status(Status.status_2006)
+				return Response.status(Status.STATUS_2006)
 						.entity("id not existed").build();
 			}
 		}
-		return Response.status(Status.status_1001).entity("id required!")
+		return Response.status(Status.STATUS_1001).entity("id required!")
 				.build();
 	}
 
@@ -126,28 +126,61 @@ public class AccountController {
 			@FormParam("password") String password) {
 		if (username != null && email != null && lastname != null
 				&& firstname != null) {
+
 			Account a = (Account) accountService.getAccountByToken(accesstoken);
-			a.setUsername(username);
-			a.setEmail(email);
-			a.setLastname(lastname);
-			a.setFirstname(firstname);
-			a.setModified_at(new Date());
-			if (a.getPassword().equals(MD5Hash.MD5(password))) {
-				boolean result = accountService.update(a);
-				if (result) {
-					return Response.status(Status.status_200)
-							.entity("Info Update:" + a).build();
+			if (a.getUsername().equals(username)) {
+				a.setUsername(username);
+				a.setEmail(email);
+				a.setLastname(lastname);
+				a.setFirstname(firstname);
+				a.setModified_at(new Date());
+				if (a.getPassword().equals(MD5Hash.MD5(password))) {
+					boolean result = accountService.update(a);
+					if (result) {
+						return Response.status(Status.STATUS_200)
+								.entity("Info Update:" + a).build();
+					} else {
+						return Response.status(Status.STATUS_2004)
+								.entity("Update failed").build();
+					}
 				} else {
-					return Response.status(Status.status_2004)
-							.entity("Update failed").build();
+					return Response
+							.status(Status.STATUS_2005)
+							.entity("password not match!you cann't update info")
+							.build();
 				}
 			} else {
-				return Response.status(Status.status_2005)
-						.entity("password not match!you cann't update info")
-						.build();
+				Account acc = accountService.findByUsername(username);
+				if (acc == null) {
+					a.setUsername(username);
+					a.setEmail(email);
+					a.setLastname(lastname);
+					a.setFirstname(firstname);
+					a.setModified_at(new Date());
+					if (a.getPassword().equals(MD5Hash.MD5(password))) {
+						boolean result = accountService.update(a);
+						if (result) {
+							return Response.status(Status.STATUS_200)
+									.entity("Info Update:" + a).build();
+						} else {
+							return Response.status(Status.STATUS_2004)
+									.entity("Update failed").build();
+						}
+					} else {
+						return Response
+								.status(Status.STATUS_2005)
+								.entity("password not match!you cann't update info")
+								.build();
+					}
+				} else {
+					return Response
+							.status(Status.STATUS_2001)
+							.entity("username is existed!please change username!")
+							.build();
+				}
 			}
 		}
-		return Response.status(Status.status_1001)
+		return Response.status(Status.STATUS_1001)
 				.entity("username,password,email,lastname,firstname required!")
 				.build();
 	}
@@ -155,7 +188,7 @@ public class AccountController {
 	@PUT
 	@Path("/changepass")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response chanepass(@HeaderParam("token") String accesstoken,
+	public Response chanePass(@HeaderParam("token") String accesstoken,
 			@FormParam("oldpass") String oldpass,
 			@FormParam("newpass") String newpass) {
 		if (accesstoken != null && oldpass != null && newpass != null) {
@@ -164,20 +197,23 @@ public class AccountController {
 				a.setPassword(MD5Hash.MD5(newpass));
 				boolean result = accountService.update(a);
 				if (result) {
+					accountService.logout(a.getId());
+					SendMail.send("lephuongdong9494@gmail.com", "[Miniblog]change password", "New Password:"+newpass);
 					return Response
-							.status(Status.status_200)
-							.entity("Change password success. New Pass: "
-									+ newpass).build();
+							.status(Status.STATUS_200)
+							.entity("Change password success.").build();
 				} else {
-					return Response.status(Status.status_2010)
+					return Response.status(Status.STATUS_2010)
 							.entity("change password failed").build();
 				}
 			} else {
-				return Response.status(Status.status_2005)
-						.entity("old password not match!you cann't change password...").build();
+				return Response
+						.status(Status.STATUS_2005)
+						.entity("old password not match!you cann't change password...")
+						.build();
 			}
 		}
-		return Response.status(Status.status_1001)
+		return Response.status(Status.STATUS_1001)
 				.entity("accesstoken,oldpass,newpass required!").build();
 	}
 
@@ -188,24 +224,30 @@ public class AccountController {
 		if (name != null) {
 			List<Account> accounts = accountService.searchByName(name);
 			if (accounts != null) {
-				return Response.status(Status.status_200)
+				return Response.status(Status.STATUS_200)
 						.entity("Data: " + accounts).build();
 			} else {
 				return Response
-						.status(Status.status_2007)
+						.status(Status.STATUS_2007)
 						.entity("username,lastname,firstname not existed with keyword "
 								+ name + "!").build();
 			}
 		}
-		return Response.status(Status.status_1001).entity("name is required!")
+		return Response.status(Status.STATUS_1001).entity("name is required!")
 				.build();
 	}
 
 	@POST
 	@Path("/logout")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response logout() {
-		return Response.status(Status.status_200).entity("logout successfully")
+	public Response logout(@HeaderParam("token") String accesstoken) {
+		Account a = accountService.getAccountByToken(accesstoken);
+		boolean result = accountService.logout(a.getId());
+		if (result) {
+			return Response.status(Status.STATUS_200)
+					.entity("logout successfully").build();
+		}
+		return Response.status(Status.STATUS_2003).entity("logout failled")
 				.build();
 	}
 

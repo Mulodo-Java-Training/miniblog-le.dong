@@ -15,7 +15,7 @@ public interface AccountService {
 	public String checkToken(int id_acc);
 	public boolean createToken(Token t);
 	public boolean checkUser(String username);
-	public void logout(String attribute);
+	public boolean logout(int account_id);
 	public Account findByUsername(String username);
 	public Account getAccountByToken(String accesstoken);
 }

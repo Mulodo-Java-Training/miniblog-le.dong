@@ -130,9 +130,15 @@ public class AccountServiceImpl implements AccountService{
 	
 
 	@Transactional
-	public void logout(String attribute) {
-		
-		
+	public boolean logout(int account_id) {
+		boolean result = false;
+		try {
+			result  = tokenService.delete(account_id);
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+		}
+		return result;
 	}
 	
 	@Transactional

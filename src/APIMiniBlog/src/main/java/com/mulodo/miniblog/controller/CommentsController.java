@@ -52,15 +52,15 @@ public class CommentsController {
 			c.setPosts(postsService.get(id_posts));
 			boolean result = commentsService.create(c);
 			if (result) {
-				return Response.status(Status.status_200)
+				return Response.status(Status.STATUS_200)
 						.entity("add comments success!Details:" + c).build();
 			} else {
-				return Response.status(Status.status_4006)
+				return Response.status(Status.STATUS_4006)
 						.entity("id_posts not existed!add comments failled!")
 						.build();
 			}
 		}
-		return Response.status(Status.status_1001)
+		return Response.status(Status.STATUS_1001)
 				.entity("comment and id_posts and accesstoken required!:").build();
 	}
 
@@ -81,25 +81,25 @@ public class CommentsController {
 					c.setPosts(postsService.get(id_posts));
 					boolean result = commentsService.update(c);
 					if (result) {
-						return Response.status(Status.status_200)
+						return Response.status(Status.STATUS_200)
 								.entity("Update comments success!Detail: " + c)
 								.build();
 					} else {
-						return Response.status(Status.status_4002)
+						return Response.status(Status.STATUS_4002)
 								.entity("update comments Failled!").build();
 					}
 				} else {
 					return Response
-							.status(Status.status_4009)
+							.status(Status.STATUS_4009)
 							.entity("comments not of account token :"
 									+ accesstoken).build();
 				}
 			} else {
-				return Response.status(Status.status_4004)
+				return Response.status(Status.STATUS_4004)
 						.entity("id not existed!").build();
 			}
 		}
-		return Response.status(Status.status_1001)
+		return Response.status(Status.STATUS_1001)
 				.entity("id,content,accesstoken is required!").build();
 	}
 
@@ -118,29 +118,29 @@ public class CommentsController {
 						boolean result = commentsService.delete(c);
 						if (result) {
 							return Response
-									.status(Status.status_200)
+									.status(Status.STATUS_200)
 									.entity("delete comments success!ID: " + id)
 									.build();
 						} else {
-							return Response.status(Status.status_4003)
+							return Response.status(Status.STATUS_4003)
 									.entity("delete comments Failled!").build();
 						}
 					} else {
 						return Response
-								.status(Status.status_4009)
+								.status(Status.STATUS_4009)
 								.entity("comments not of account token :"
 										+ accesstoken).build();
 					}
 				} else {
-					return Response.status(Status.status_4008)
+					return Response.status(Status.STATUS_4008)
 							.entity("comment not of posts").build();
 				}
 			} else {
-				return Response.status(Status.status_4004)
+				return Response.status(Status.STATUS_4004)
 						.entity("id not existed!").build();
 			}
 		}
-		return Response.status(Status.status_1001).entity("id accesstoken is required!")
+		return Response.status(Status.STATUS_1001).entity("id accesstoken is required!")
 				.build();
 	}
 
@@ -151,10 +151,10 @@ public class CommentsController {
 		Account a = accountService.getAccountByToken(accesstoken);
 			List<Comments> comments = commentsService.getCommentsOfUser(a.getId());
 			if (comments != null) {
-				return Response.status(Status.status_200)
+				return Response.status(Status.STATUS_200)
 						.entity("All Comments of User:" + comments).build();
 			} else {
-				return Response.status(Status.status_4005)
+				return Response.status(Status.STATUS_4005)
 						.entity("not found comments with account!").build();
 			}
 		
@@ -168,14 +168,14 @@ public class CommentsController {
 			List<Comments> comments = commentsService
 					.getCommentsOfPosts(id_posts);
 			if (comments != null) {
-				return Response.status(Status.status_200)
+				return Response.status(Status.STATUS_200)
 						.entity("All Comments of Posts:" + comments).build();
 			} else {
-				return Response.status(Status.status_4006)
+				return Response.status(Status.STATUS_4006)
 						.entity("id_posts not existed!").build();
 			}
 		}
-		return Response.status(Status.status_1001)
+		return Response.status(Status.STATUS_1001)
 				.entity("id_posts is required!").build();
 	}
 }

@@ -178,6 +178,6 @@ public class Posts {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "[ "+title+"-"+content+"-"+create_at+" ]";
+		return "[ "+title+"-"+content+"-"+create_at+"-"+modified_at+" ]";
 	}
 }
