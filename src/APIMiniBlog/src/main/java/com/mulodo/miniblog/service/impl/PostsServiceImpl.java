@@ -128,5 +128,31 @@ public class PostsServiceImpl implements PostsService {
 		}
 		return null;
 	}
+	//method getAllPostsByContent.input content return list object Posts
+	@Transactional
+	public List<Posts> getAllPostsByContent(String content) {
+		try {
+			String query = "from Posts where content like '%"+content+"%'";
+			List<Posts> posts = postsDAO.getAll(query);
+			if (posts != null)
+				return posts;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	//method getAllPostsTop
+	@Transactional
+	public List<Posts> getAllPostsTop() {
+		try {
+			String query = "from posts where status = 1 order by create_at desc limit 10";
+			List<Posts> posts = postsDAO.getAll(query);
+			if (posts != null)
+				return posts;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
 
 }

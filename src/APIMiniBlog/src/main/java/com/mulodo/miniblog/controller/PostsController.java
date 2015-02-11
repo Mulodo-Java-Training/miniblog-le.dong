@@ -28,13 +28,14 @@ import com.mulodo.miniblog.util.Status;
 @Path("/posts")
 @Produces(MediaType.APPLICATION_JSON)
 public class PostsController {
-	//method AccountService
+	// method AccountService
 	@Autowired
 	private AccountService accountService;
-	//method PostsService
+	// method PostsService
 	@Autowired
 	private PostsService postsService;
-	//method create Posts
+
+	// method create Posts
 	@POST
 	@Path("/create")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -61,7 +62,8 @@ public class PostsController {
 		return Response.status(Status.STATUS_1001)
 				.entity("title and content and accesstoken required!:").build();
 	}
-	//method active Posts
+
+	// method active Posts
 	@PUT
 	@Path("/active/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -97,7 +99,8 @@ public class PostsController {
 		return Response.status(Status.STATUS_1001)
 				.entity("id and accesstoken is required!").build();
 	}
-	//method deactive Posts
+
+	// method deactive Posts
 	@PUT
 	@Path("/deactive/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -133,7 +136,8 @@ public class PostsController {
 		return Response.status(Status.STATUS_1001)
 				.entity("id and accesstoken is required!").build();
 	}
-	//method update Posts
+
+	// method update Posts
 	@PUT
 	@Path("/update/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -172,7 +176,8 @@ public class PostsController {
 		return Response.status(Status.STATUS_1001)
 				.entity("id,title,content,accesstoken is required!").build();
 	}
-	//method delete Posts
+
+	// method delete Posts
 	@DELETE
 	@Path("/delete/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -205,7 +210,8 @@ public class PostsController {
 		return Response.status(Status.STATUS_1001)
 				.entity("id and accesstoken is required!").build();
 	}
-	//method get Posts
+
+	// method get Posts
 	@GET
 	@Path("/get/{id}")
 	public Response get(@PathParam("id") int id) {
@@ -222,7 +228,8 @@ public class PostsController {
 		return Response.status(Status.STATUS_1001).entity("id is required!")
 				.build();
 	}
-	//method getAllPostsActive
+
+	// method getAllPostsActive
 	@GET
 	@Path("/getallactive")
 	public Response getAllActive() {
@@ -233,7 +240,8 @@ public class PostsController {
 		}
 		return Response.status(Status.STATUS_3007).entity("No Data").build();
 	}
-	//method getAllPostsDeactive
+
+	// method getAllPostsDeactive
 	@GET
 	@Path("/getalldeactive")
 	public Response getAllDeactive() {
@@ -244,7 +252,8 @@ public class PostsController {
 		}
 		return Response.status(Status.STATUS_3007).entity("No Data").build();
 	}
-	//method getAllPostsOfUser
+
+	// method getAllPostsOfUser
 	@GET
 	@Path("/getpostsofuser")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -257,5 +266,33 @@ public class PostsController {
 		}
 		return Response.status(Status.STATUS_3006)
 				.entity("not found posts with account!!").build();
+	}
+
+	// method search
+	@GET
+	@Path("/search")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response search(@FormParam("content") String content) {
+		List<Posts> posts = postsService.getAllPostsByContent(content);
+		if (posts != null) {
+			return Response.status(Status.STATUS_200)
+					.entity("All Posts By Content:" + posts).build();
+		}
+		return Response.status(Status.STATUS_3006)
+				.entity("not found posts with keyword content!!").build();
+	}
+
+	// method top
+	@GET
+	@Path("/top")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response top() {
+		List<Posts> posts = postsService.getAllPostsTop();
+		if (posts != null) {
+			return Response.status(Status.STATUS_200)
+					.entity("All Posts Top:" + posts).build();
+		}
+		return Response.status(Status.STATUS_3006).entity("not found posts !!")
+				.build();
 	}
 }

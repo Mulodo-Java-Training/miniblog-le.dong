@@ -14,4 +14,6 @@ public interface PostsService {
 	public List<Posts> getAllPostsActive();
 	public List<Posts> getAllPostsDeactive();
 	public List<Posts> getAllPostsByUser(int id);
+	public List<Posts> getAllPostsByContent(String content);
+	public List<Posts> getAllPostsTop();
 }
