@@ -8,8 +8,8 @@ Hệ thống "Mini Blog" Yêu cầu Suy nghĩ, thiết kế một hệ thống g
 
 -Front-End:
 
-[.]Login/Logout
-[.]Trang Top: liệt kê 10 bài post mới nhất
+[]Login/Logout
+[]Trang Top: liệt kê 10 bài post mới nhất
 -Cập nhật thông tin user
 -Thay đổi password
 -Tìm kiếm user bằng username/firstname/lastname (fulltext search)
