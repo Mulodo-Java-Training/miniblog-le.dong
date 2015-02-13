@@ -12,13 +12,13 @@ import org.junit.Test;
 
 public class CommentsTest {
 	//root url
-	static final String ROOT_URL = "http://localhost:8080/MiniBlog/posts/";
+	static final String ROOT_URL = "http://localhost:8080/MiniBlog/";
 	// Test Add Comments
 	@Test
 	public void testAddComments() throws Exception {
 		try {
 			ClientRequest request = new ClientRequest(ROOT_URL
-					+ "{id_posts}/comments/add/");
+					+ "{id_posts}/add/");
 			request.accept("application/json");
 			request.pathParameter("id_posts", 1);
 			request.header("token", "5O0cYcWjzUN1n98XeO17hVAuYtKpvzFKF4UB2Wxa");
@@ -57,7 +57,7 @@ public class CommentsTest {
 	public void testEditComments() throws Exception {
 		try {
 			ClientRequest request = new ClientRequest(ROOT_URL
-					+ "{id_posts}/comments/update/{id}/");
+					+ "{id_posts}/edit/{id}/");
 			request.accept("application/json");
 			request.pathParameter("id_posts", 1);
 			request.pathParameter("id", 2);
@@ -97,7 +97,7 @@ public class CommentsTest {
 	public void testDeleteComments() throws Exception {
 		try {
 			ClientRequest request = new ClientRequest(ROOT_URL
-					+ "{id_posts}/comments/delete/{id}/");
+					+ "{id_posts}/delete/{id}/");
 			request.accept("application/json");
 			request.pathParameter("id_posts", 1);
 			request.pathParameter("id", 2);
@@ -136,7 +136,7 @@ public class CommentsTest {
 	public void testGetAllCommentsForUser() throws Exception {
 		try {
 			ClientRequest request = new ClientRequest(ROOT_URL
-					+ "comments/getcommentsofuser/");
+					+ "getcommentsofuser/");
 			request.accept("application/json");
 			request.header("token", "5O0cYcWjzUN1n98XeO17hVAuYtKpvzFKF4UB2Wxa");
 			ClientResponse<String> response = request.get(String.class);
@@ -173,7 +173,7 @@ public class CommentsTest {
 	public void testGetAllCommentsForPosts() throws Exception {
 		try {
 			ClientRequest request = new ClientRequest(ROOT_URL
-					+ "/{id_posts}/comments/getcommentsofposts/");
+					+ "/{id_posts}/getcommentsofposts/");
 			request.accept("application/json");
 			request.pathParameter("id_posts", 1);
 			ClientResponse<String> response = request.get(String.class);

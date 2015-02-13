@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.ForeignKey;
 import org.hibernate.annotations.Type;
 
@@ -29,6 +30,7 @@ public class Posts {
 	private Account account;
 
 	@OneToMany(targetEntity = Comments.class, mappedBy = "posts", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Comments> posts_comments;
 
 	@Id

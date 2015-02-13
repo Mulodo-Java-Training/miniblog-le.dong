@@ -14,7 +14,7 @@ import org.junit.Test;
 
 public class AccountTest {
 	//root url
-	static final String ROOT_URL = "http://localhost:8080/MiniBlog/account/";
+	static final String ROOT_URL = "http://localhost:8080/MiniBlog/";
 	// Test Register
 	@Test
 	public void testRegister() throws Exception {
@@ -96,7 +96,7 @@ public class AccountTest {
 	@Test
 	public void testUpdate() throws Exception {
 		try {
-			ClientRequest request = new ClientRequest(ROOT_URL + "update/");
+			ClientRequest request = new ClientRequest(ROOT_URL + "updateuser/");
 			request.accept("application/json");
 			request.header("token", "5O0cYcWjzUN1n98XeO17hVAuYtKpvzFKF4UB2Wxa");
 			request.formParameter("username", "vykhuong");
@@ -137,7 +137,7 @@ public class AccountTest {
 	@Test
 	public void testGetInfo() throws Exception {
 		try {
-			ClientRequest request = new ClientRequest(ROOT_URL + "get/{id}");
+			ClientRequest request = new ClientRequest(ROOT_URL + "getuser/{id}");
 			request.accept("application/json");
 			request.pathParameter("id", 4);
 

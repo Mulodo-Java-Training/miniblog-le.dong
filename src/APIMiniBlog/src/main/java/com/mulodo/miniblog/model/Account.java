@@ -15,6 +15,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.mulodo.miniblog.config.AccountDateDeserialize;
+
 @Entity
 @Table(name = "account")
 public class Account {
@@ -40,10 +46,12 @@ public class Account {
 
 	@Column(columnDefinition = "TIMESTAMP(0) default CURRENT_TIMESTAMP")
 	@Temporal(TemporalType.TIMESTAMP)
+	@JsonDeserialize(using = AccountDateDeserialize.class)
 	private Date create_at;
 
 	@Column(columnDefinition = "TIMESTAMP(0) default CURRENT_TIMESTAMP")
 	@Temporal(TemporalType.TIMESTAMP)
+	@JsonDeserialize(using = AccountDateDeserialize.class)
 	private Date modified_at;
 
 	public List<Posts> getAccount_posts() {
@@ -71,12 +79,15 @@ public class Account {
 	}
 
 	@OneToMany(targetEntity = Posts.class, mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Posts> account_posts;
 
 	@OneToMany(targetEntity = Comments.class, mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Comments> account_comments;
 
 	@OneToMany(targetEntity = Token.class, mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Token> account_token;
 
 	public Account() {
@@ -166,7 +177,8 @@ public class Account {
 
 	@Override
 	public String toString() {
-		return "[" + username + "-" + email + "-" + create_at +" - "+modified_at+" - " +lastname+firstname+ "]";
+		return "[" + username + "-" + email + "-" + create_at + " - "
+				+ modified_at + " - " + lastname + firstname + "]";
 	}
 
 }

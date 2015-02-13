@@ -14,7 +14,7 @@ import org.junit.Test;
 
 public class PostsTest {
 	
-	static final String ROOT_URL = "http://localhost:8080/MiniBlog/posts/";
+	static final String ROOT_URL = "http://localhost:8080/MiniBlog/";
 	// Test Create Posts
 	@Test
 	public void testCreate() throws Exception {
@@ -132,9 +132,10 @@ public class PostsTest {
 	@Test
 	public void testUpdate() throws Exception {
 		try {
-			ClientRequest request = new ClientRequest(ROOT_URL + "update/");
+			ClientRequest request = new ClientRequest(ROOT_URL + "updateposts/{id}");
 			request.accept("application/json");
 			request.header("token", "5O0cYcWjzUN1n98XeO17hVAuYtKpvzFKF4UB2Wxa");
+			request.pathParameter("id", 1);
 			request.formParameter("title", "[FA Cup]Round of 5");
 			request.formParameter("content", "MU 3-0 Cambridge");
 
@@ -170,7 +171,7 @@ public class PostsTest {
 	@Test
 	public void testDelete() throws Exception {
 		try {
-			ClientRequest request = new ClientRequest(ROOT_URL + "delete/{id}");
+			ClientRequest request = new ClientRequest(ROOT_URL + "deleteposts/{id}");
 			request.accept("application/json");
 			request.header("token", "5O0cYcWjzUN1n98XeO17hVAuYtKpvzFKF4UB2Wxa");
 			request.pathParameter("id", 2);
@@ -207,7 +208,7 @@ public class PostsTest {
 	@Test
 	public void testGet() throws Exception {
 		try {
-			ClientRequest request = new ClientRequest(ROOT_URL + "get/{id}");
+			ClientRequest request = new ClientRequest(ROOT_URL + "getposts/{id}");
 			request.accept("application/json");
 			request.pathParameter("id", 1);
 
