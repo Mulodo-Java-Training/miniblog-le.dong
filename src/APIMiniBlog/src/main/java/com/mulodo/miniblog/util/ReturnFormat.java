@@ -57,6 +57,10 @@ public class ReturnFormat {
 				error_code = 2010;
 				description = "change password failled!";
 				break;
+			case 2011:
+				error_code = 2011;
+				description = "expired token!please login!";
+				break;
 			case 3001:
 				error_code = 3001;
 				description = "create posts failled!";

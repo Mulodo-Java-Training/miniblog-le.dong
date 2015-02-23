@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mulodo.miniblog.dao.TokenDAO;
 import com.mulodo.miniblog.model.Token;
@@ -15,7 +16,7 @@ public class TokenServiceImpl implements TokenService {
 	@Autowired
 	TokenDAO tokenDAO;
 	//method create Token.input object Token return true or false
-	@Override
+	@Transactional
 	public boolean create(Token t) {
 		try {
 			tokenDAO.create(t);
@@ -26,7 +27,7 @@ public class TokenServiceImpl implements TokenService {
 		return false;
 	}
 	//method delete Token.input account_id return true or false
-	@Override
+	@Transactional
 	public boolean delete(int id_acc) {
 		try {
 			List<Token> tokens = tokenDAO.getAllTokenOfUser(id_acc);
@@ -42,7 +43,7 @@ public class TokenServiceImpl implements TokenService {
 		return false;
 	}
 	//method getAllTokenOfUser.input account_id return list object Token
-	@Override
+	@Transactional
 	public List<Token> getAllTokenOfUser(int id_acc) {
 		try {
 			List<Token> tokens = tokenDAO.getAllTokenOfUser(id_acc);
@@ -54,7 +55,7 @@ public class TokenServiceImpl implements TokenService {
 		return null;
 	}
 	//method getTokenByAccesstoken.input accesstoken return object Token
-	@Override
+	@Transactional
 	public Token getTokenByAccesstoken(String accesstoken) {
 		try {
 			Token token = tokenDAO.getTokenByAccesstoken(accesstoken);
@@ -64,6 +65,19 @@ public class TokenServiceImpl implements TokenService {
 			System.out.println(e);
 		}
 		return null;
+	}
+	@Transactional
+	public boolean deleteToken(String accesstoken) {
+		try {
+			Token t = tokenDAO.getTokenByAccesstoken(accesstoken);
+			if (t != null) {
+				tokenDAO.delete(t);
+				return true;
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return false;
 	}
 
 }

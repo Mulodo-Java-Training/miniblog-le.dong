@@ -1,6 +1,31 @@
 package com.mulodo.miniblog.util;
 
 public class Status {
+	
+	//validation
+	
+	public final static String USERNAME_STRING_RANGE = "[a-z0-9]{6,32}";
+
+    public final static String PASSWORD_STRING_RANGE = "[A-Za-z0-9]{6,72}";
+
+    public final static String FIRSTNAME_STRING_RANGE = "[A-Za-z0-9]{1,32}";
+
+    public final static String LASTNAME_STRING_RANGE = "[A-Za-z0-9]{1,32}";
+
+    public final static String ACCESS_TOKEN_STRING_RANGE = "[a-f0-9]{64}";
+
+    public final static String USERNAME_SEARCH_RANGE = "[a-z0-9]{1,32}";
+
+    public final static String POST_TITLE_STRING_RANGE = "[\\p{Print}&&[^~,]]{10,100}";
+
+    public final static String POST_TITLE_SEARCH_RANGE = "[\\p{Print}&&[^~,]]{1,100}";
+
+    public final static String POST_CONTENT_STRING_RANGE = "[\\p{Print}&&[^~,]]{10,2048}";
+
+    public final static String COMMENT_STRING_RANGE = "[\\p{Print}&&[^~,]]{1,254}";
+
+    public final static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+	
 	//successfully
 	public static final int STATUS_200 = 200;
 	
@@ -30,6 +55,8 @@ public class Status {
 	public static final int STATUS_2009 = 2009;
 	//error: change password failled
 	public static final int STATUS_2010 = 2010;
+	//error: expired token
+	public static final int STATUS_2011 = 2011;
 	
 	//error table posts
 	//error: create posts failled

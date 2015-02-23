@@ -1,5 +1,7 @@
 package com.mulodo.miniblog.service.impl;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +16,14 @@ import com.mulodo.miniblog.service.TokenService;
 
 @Service
 public class AccountServiceImpl implements AccountService {
-	//variable AccountDAO
+	// variable AccountDAO
 	@Autowired
 	AccountDAO accountDAO;
-	//variable TokenService
+	// variable TokenService
 	@Autowired
 	TokenService tokenService;
-	//method register.input object Account return true or false
+
+	// method register.input object Account return true or false
 	@Transactional
 	public boolean register(Account acc) {
 		try {
@@ -31,7 +34,8 @@ public class AccountServiceImpl implements AccountService {
 		}
 		return false;
 	}
-	//method login.input username and password return object Account
+
+	// method login.input username and password return object Account
 	@Transactional
 	public Account login(String username, String password) {
 		try {
@@ -43,25 +47,8 @@ public class AccountServiceImpl implements AccountService {
 		}
 		return null;
 	}
-	//method changePassword.input account_id,oldpass,newpass return true or false
-	@Transactional
-	public boolean changePassword(int id, String oldpass, String newpass) {
-		try {
-			Account a = accountDAO.findByID(id);
-			if (a != null) {
-				if (a.getPassword().equals(oldpass)) {
-					a.setPassword(newpass);
-					accountDAO.update(a);
-					return true;
-				}
 
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return false;
-	}
-	//method getInfo.input account_id return object Account
+	// method getInfo.input account_id return object Account
 	@Transactional
 	public Account getInfo(int id) {
 		try {
@@ -73,7 +60,8 @@ public class AccountServiceImpl implements AccountService {
 		}
 		return null;
 	}
-	//method searchByName.input keyword name return list object Account
+
+	// method searchByName.input keyword name return list object Account
 	@Transactional
 	public List<Account> searchByName(String name) {
 		String query = "from Account where username like '%" + name
@@ -88,7 +76,8 @@ public class AccountServiceImpl implements AccountService {
 		}
 		return null;
 	}
-	//method update info Account.input object Account return true or false
+
+	// method update info Account.input object Account return true or false
 	@Transactional
 	public boolean update(Account acc) {
 		try {
@@ -99,7 +88,8 @@ public class AccountServiceImpl implements AccountService {
 		}
 		return false;
 	}
-	//method checkUser.input username return true or false
+
+	// method checkUser.input username return true or false
 	@Transactional
 	public boolean checkUser(String username) {
 		try {
@@ -112,7 +102,8 @@ public class AccountServiceImpl implements AccountService {
 		}
 		return false;
 	}
-	//method findByUsername.input username return object Account
+
+	// method findByUsername.input username return object Account
 	@Transactional
 	public Account findByUsername(String username) {
 		try {
@@ -124,7 +115,8 @@ public class AccountServiceImpl implements AccountService {
 		}
 		return null;
 	}
-	//method logout.input account_id return true or false
+
+	// method logout.input account_id return true or false
 	@Transactional
 	public boolean logout(int account_id) {
 		boolean result = false;
@@ -135,7 +127,8 @@ public class AccountServiceImpl implements AccountService {
 		}
 		return result;
 	}
-	//method createToken.input object Token return true or false
+
+	// method createToken.input object Token return true or false
 	@Transactional
 	public boolean createToken(Token t) {
 		try {
@@ -146,7 +139,8 @@ public class AccountServiceImpl implements AccountService {
 		}
 		return false;
 	}
-	//method checkToken.input accesstoken return object Account
+
+	// method checkToken.input accesstoken return object Account
 	@Transactional
 	public Account checkToken(String accesstoken) {
 		try {
@@ -159,5 +153,32 @@ public class AccountServiceImpl implements AccountService {
 		}
 		return null;
 	}
-	
+
+	// method checkExpiredDate token
+	@Transactional
+	public int checkExpiredDate(String accesstoken) {
+		Token t = tokenService.getTokenByAccesstoken(accesstoken);
+		Calendar cal = Calendar.getInstance();
+		return cal.getTime().compareTo(t.getExpired_at());
+	}
+
+	// method sumationExpiredDate token
+	@Transactional
+	public Date sumationExpiredDate() {
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DAY_OF_MONTH, 1);
+		return cal.getTime();
+	}
+	//method delete Token
+	@Transactional
+	public boolean deleteToken(String accesstoken) {
+		boolean result = false;
+		try {
+			result = tokenService.deleteToken(accesstoken);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return result;
+	}
+
 }

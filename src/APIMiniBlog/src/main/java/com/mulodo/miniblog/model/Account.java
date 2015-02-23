@@ -17,7 +17,6 @@ import javax.persistence.TemporalType;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import com.mulodo.miniblog.config.AccountDateDeserialize;
 
@@ -53,30 +52,6 @@ public class Account {
 	@Temporal(TemporalType.TIMESTAMP)
 	@JsonDeserialize(using = AccountDateDeserialize.class)
 	private Date modified_at;
-
-	public List<Posts> getAccount_posts() {
-		return account_posts;
-	}
-
-	public void setAccount_posts(List<Posts> account_posts) {
-		this.account_posts = account_posts;
-	}
-
-	public List<Comments> getAccount_comments() {
-		return account_comments;
-	}
-
-	public void setAccount_comments(List<Comments> account_comments) {
-		this.account_comments = account_comments;
-	}
-
-	public List<Token> getAccount_token() {
-		return account_token;
-	}
-
-	public void setAccount_token(List<Token> account_token) {
-		this.account_token = account_token;
-	}
 
 	@OneToMany(targetEntity = Posts.class, mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
@@ -173,6 +148,30 @@ public class Account {
 
 	public void setModified_at(Date modified_at) {
 		this.modified_at = modified_at;
+	}
+	
+	public List<Posts> getAccount_posts() {
+		return account_posts;
+	}
+
+	public void setAccount_posts(List<Posts> account_posts) {
+		this.account_posts = account_posts;
+	}
+
+	public List<Comments> getAccount_comments() {
+		return account_comments;
+	}
+
+	public void setAccount_comments(List<Comments> account_comments) {
+		this.account_comments = account_comments;
+	}
+
+	public List<Token> getAccount_token() {
+		return account_token;
+	}
+
+	public void setAccount_token(List<Token> account_token) {
+		this.account_token = account_token;
 	}
 
 	@Override
