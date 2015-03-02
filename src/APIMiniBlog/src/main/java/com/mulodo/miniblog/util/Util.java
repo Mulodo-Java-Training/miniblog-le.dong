@@ -12,9 +12,4 @@ public class Util {
 			sb.append(AB.charAt(rnd.nextInt(AB.length())));
 		return sb.toString();
 	}
-
-	public static void main(String[] args) {
-		String a = Util.randomString();
-		System.out.println(a + "   " + a.length());
-	}
 }

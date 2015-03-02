@@ -1,5 +1,7 @@
 package com.mulodo.miniblog.form;
 
+import java.util.Calendar;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.ws.rs.FormParam;
@@ -32,6 +34,10 @@ public class SignUpForm {
         a.setUsername(this.username);
         a.setPassword(MD5Hash.MD5(this.password));
         a.setEmail(this.email);
+        a.setLastname("");
+        a.setFirstname("");
+        a.setCreate_at(Calendar.getInstance().getTime());
+        a.setModified_at(Calendar.getInstance().getTime());
         return a;
     }
 }

@@ -17,21 +17,23 @@ public class CommentsServiceImpl implements CommentsService {
 	CommentsDAO commentsDAO;
 	//method create Comments.input object Comments return true or false
 	@Transactional
-	public boolean create(Comments c) {
+	public int create(Comments c) {
 		try {
-			commentsDAO.create(c);
-			return true;
+			return commentsDAO.create(c);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		return false;
+		return 0;
 	}
 	//method update Comments.input object Comments return true or false
 	@Transactional
 	public boolean update(Comments c) {
 		try {
+			if(c!=null)
+			{
 			commentsDAO.update(c);
 			return true;
+			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}

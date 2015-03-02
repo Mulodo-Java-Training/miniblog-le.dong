@@ -1,12 +1,9 @@
 package com.mulodo.miniblog.controller;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -14,7 +11,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -25,7 +21,10 @@ import org.springframework.stereotype.Controller;
 
 import returnform.AccessToken;
 
+import com.mulodo.miniblog.form.ChangePasswordForm;
+import com.mulodo.miniblog.form.SignInform;
 import com.mulodo.miniblog.form.SignUpForm;
+import com.mulodo.miniblog.form.UpdateAccountForm;
 import com.mulodo.miniblog.model.Token;
 import com.mulodo.miniblog.model.Account;
 import com.mulodo.miniblog.service.AccountService;
@@ -42,26 +41,21 @@ public class AccountController {
 	// variable AccountService
 	@Autowired
 	private AccountService accountService;
-	@Context
-	private HttpServletResponse response;
-	@Context
-	private HttpServletRequest request;
 
 	// method login
 	@POST
 	@Path("login")
 	@ValidateRequest
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response login(
-			@FormParam("username") String username,
-			@FormParam("password") String password) {
+	public Response login(@Form @Valid SignInform form) {
 		ReturnFormat json = new ReturnFormat();
-		if (username != null && password != null) {
-			Account a = accountService.login(username, MD5Hash.MD5(password));
+		if (form.username != null && form.password != null) {
+			Account a = accountService.login(form.username,
+					MD5Hash.MD5(form.password));
 			if (a != null) {
 				Token t = new Token();
 				t.setAccess_token(Util.randomString());
-				t.setCreate_at(new Date());
+				t.setCreate_at(Calendar.getInstance().getTime());
 				t.setExpired_at(accountService.sumationExpiredDate());
 				t.setAccount(a);
 				accountService.createToken(t);
@@ -84,15 +78,9 @@ public class AccountController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response register(@Form @Valid SignUpForm data) {
 		ReturnFormat json = new ReturnFormat();
-		if (data.username != null && data.password != null && data.email != null) {
-			Account a = new Account();
-			a.setUsername(data.username);
-			a.setPassword(data.password);
-			a.setEmail(data.email);
-			a.setLastname("");
-			a.setFirstname("");
-			a.setCreate_at(new Date());
-			a.setModified_at(new Date());
+		if (data.username != null && data.password != null
+				&& data.email != null) {
+			Account a = data.setData();
 			boolean result = accountService.checkUser(data.username);
 			if (result) {
 				boolean result2 = accountService.register(a);
@@ -141,24 +129,21 @@ public class AccountController {
 	@Path("updateuser")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response update(@HeaderParam("token") String accesstoken,
-			@FormParam("email") String email,
-			@FormParam("lastname") String lastname,
-			@FormParam("firstname") String firstname,
-			@FormParam("password") String password) {
+			@Form @Valid UpdateAccountForm form) {
 		ReturnFormat json = new ReturnFormat();
-		if (email != null && lastname != null && firstname != null) {
+		if (form.lastname != null && form.firstname != null
+				&& form.password != null) {
 			int rs = accountService.checkExpiredDate(accesstoken);
 			if (rs > 0) {
 				accountService.deleteToken(accesstoken);
 				json.meta.code(2011);
-				return Response.status(Status.STATUS_2011).entity(json).build();
+				return Response.status(Status.STATUS_2008).entity(json).build();
 			} else {
 				Account a = (Account) accountService.checkToken(accesstoken);
-				a.setEmail(email);
-				a.setLastname(lastname);
-				a.setFirstname(firstname);
-				a.setModified_at(new Date());
-				if (a.getPassword().equals(MD5Hash.MD5(password))) {
+				if (a.getPassword().equals(MD5Hash.MD5(form.password))) {
+					a.setLastname(form.lastname);
+					a.setFirstname(form.firstname);
+					a.setModified_at(Calendar.getInstance().getTime());
 					boolean result = accountService.update(a);
 					if (result) {
 						json.meta.code(200);
@@ -186,30 +171,29 @@ public class AccountController {
 	@PUT
 	@Path("changepass")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response chanePass(@HeaderParam("token") String accesstoken,
-			@FormParam("oldpass") String oldpass,
-			@FormParam("newpass") String newpass) {
+	public Response changePass(@HeaderParam("token") String accesstoken,
+			@Form @Valid ChangePasswordForm form) {
 		ReturnFormat json = new ReturnFormat();
-		if (accesstoken != null && oldpass != null && newpass != null) {
+		if (form.old_password != null && form.new_password != null) {
 			int rs = accountService.checkExpiredDate(accesstoken);
 			if (rs > 0) {
 				accountService.deleteToken(accesstoken);
 				json.meta.code(2011);
-				return Response.status(Status.STATUS_2011).entity(json).build();
+				return Response.status(Status.STATUS_2008).entity(json).build();
 			} else {
 				Account a = accountService.checkToken(accesstoken);
-				if (a.getPassword().equals(MD5Hash.MD5(oldpass))) {
-					a.setPassword(MD5Hash.MD5(newpass));
-					boolean result = accountService.update(a);
+				if (a.getPassword().equals(MD5Hash.MD5(form.old_password))) {
+					a.setPassword(MD5Hash.MD5(form.new_password));
+					boolean result = accountService.changePassword(a.getId(), form.old_password, form.new_password);
 					if (result) {
 						accountService.logout(a.getId());
-						SendMail.send(a.getEmail(),
-								"[Miniblog]change password", "New Password:"
-										+ newpass);
+//						SendMail.send(a.getEmail(),
+//								"[Miniblog]change password", "New Password:"
+//										+ form.new_password);
 						Token t = new Token();
 						t.setAccess_token(Util.randomString());
-						t.setCreate_at(new Date());
-						t.setExpired_at(new Date());
+						t.setCreate_at(Calendar.getInstance().getTime());
+						t.setExpired_at(accountService.sumationExpiredDate());
 						t.setAccount(a);
 						accountService.createToken(t);
 						json.meta.code(200);
@@ -244,7 +228,7 @@ public class AccountController {
 		if (rs > 0) {
 			accountService.deleteToken(accesstoken);
 			json.meta.code(2011);
-			return Response.status(Status.STATUS_2011).entity(json).build();
+			return Response.status(Status.STATUS_2008).entity(json).build();
 		} else {
 			Account a = accountService.checkToken(accesstoken);
 			if (a != null) {
@@ -279,7 +263,7 @@ public class AccountController {
 		if (rs > 0) {
 			accountService.deleteToken(accesstoken);
 			json.meta.code(2011);
-			return Response.status(Status.STATUS_2011).entity(json).build();
+			return Response.status(Status.STATUS_2008).entity(json).build();
 		} else {
 			Account a = accountService.checkToken(accesstoken);
 			boolean result = accountService.logout(a.getId());

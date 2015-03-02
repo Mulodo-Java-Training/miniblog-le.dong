@@ -1,5 +1,6 @@
 package junittest.resource;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,10 +15,8 @@ public class AccountControllerTest implements AccountService{
 
 	@Override
 	public boolean register(Account acc) {
-		switch (acc.getUsername()) {
-		case "register2009":
+		if(acc.getUsername().equals("register2009"))
 			return false;
-		}
 		return true;
 	}
 
@@ -25,18 +24,12 @@ public class AccountControllerTest implements AccountService{
 	public Account login(String username, String password) {
 		Account a = new Account();
 		Token t = new Token();
-		switch (username) {
-		case "login200":
+		if(username.equals("login200")) {
 			a.setUsername("login200");
-			t.setAccess_token(null);
-			break;
-
-		default:
-			a.setUsername(null);
-			t.setAccess_token(null);
-			break;
+			t.setAccess_token("login");
+			return a;
 		}
-		return a;
+		return null;
 	}
 
 	@Override
@@ -53,14 +46,19 @@ public class AccountControllerTest implements AccountService{
 
 	@Override
 	public List<Account> searchByName(String name) {
-		// TODO Auto-generated method stub
+		if(name.equals("hae"))
+		{
+			List<Account> accounts = new ArrayList<Account>();
+			accounts.add(new Account(1, "le.dong", "e10adc3949ba59abbe56e057f20f883e", "dong", "hae", "le.dong@gmail.com",null , null, null, null, null));
+			accounts.add(new Account(2, "le.dong2", "e10adc3949ba59abbe56e057f20f883e", "dong2", "hae", "le.dong2@gmail.com",null , null, null, null, null));
+			return accounts;
+		}
 		return null;
 	}
 
 	@Override
 	public boolean update(Account acc) {
-		switch (acc.getUsername()) {
-		case "update200":
+		if(acc.getLastname().equals("update200")) {
 			return true;
 		}
 		return false;
@@ -74,11 +72,10 @@ public class AccountControllerTest implements AccountService{
 
 	@Override
 	public boolean checkUser(String username) {
-		switch (username) {
-		case "register2001":
-			return true;
+		if(username.equals("register2001")) {
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	@Override
@@ -91,8 +88,7 @@ public class AccountControllerTest implements AccountService{
 	@Override
 	public Account findByUsername(String username) {
 		Account a = new Account();
-		switch (username) {
-		case "result":
+		if(username.equals("result")) {
 			a.setUsername("result");
 			return a;
 		}
@@ -101,13 +97,28 @@ public class AccountControllerTest implements AccountService{
 
 	@Override
 	public Account checkToken(String accesstoken) {
-		// TODO Auto-generated method stub
+		if(accesstoken.equals("token"))
+		{
+			Account a = new Account();
+			a.setId(1);
+			a.setPassword("e10adc3949ba59abbe56e057f20f883e");
+			return a;
+		}
+		if(accesstoken.equals("errortoken"))
+		{
+			Account a = new Account();
+			a.setId(0);
+			return a;
+		}
 		return null;
 	}
 
 	@Override
 	public int checkExpiredDate(String accesstoken) {
-		// TODO Auto-generated method stub
+		if(accesstoken.equals("expired"))
+		{
+			return 1;
+		}
 		return 0;
 	}
 
@@ -119,6 +130,25 @@ public class AccountControllerTest implements AccountService{
 
 	@Override
 	public boolean deleteToken(String accesstoken) {
+		if(accesstoken.equals("delete"))
+		{
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean changePassword(int id, String old_password,
+			String new_password) {
+		if(new_password.equals("1234567"))
+		{
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean deleteUser(String username) {
 		// TODO Auto-generated method stub
 		return false;
 	}

@@ -18,15 +18,14 @@ public class PostsDAOImpl implements PostsDAO {
 	SessionFactory sessionFactory;
 	//method create Posts,input object Posts return true or false
 	@Override
-	public boolean create(Posts p) {
+	public int create(Posts p) {
 		Session session = sessionFactory.getCurrentSession();
 		try {
-			session.save(p);
-			return true;
+			return (Integer) session.save(p);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		return false;
+		return 0;
 	}
 	//method update Posts,input object Posts return true or false
 	@Override

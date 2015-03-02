@@ -12,43 +12,52 @@ import com.mulodo.miniblog.service.PostsService;
 
 @Service
 public class PostsServiceImpl implements PostsService {
-	//variable PostsDAO
+	// variable PostsDAO
 	@Autowired
 	PostsDAO postsDAO;
-	//method create Posts.input object Posts return true or false
+
+	// method create Posts.input object Posts return true or false
 	@Transactional
-	public boolean create(Posts p) {
+	public int create(Posts p) {
 		try {
-			postsDAO.create(p);
-			return true;
+			if (p != null) {
+				return postsDAO.create(p);
+			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		return false;
+		return 0;
 	}
-	//method update Posts.input object Posts return true or false
+
+	// method update Posts.input object Posts return true or false
 	@Transactional
 	public boolean update(Posts p) {
 		try {
-			postsDAO.update(p);
-			return true;
+			if (p != null) {
+				postsDAO.update(p);
+				return true;
+			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 		return false;
 	}
-	//method delete Posts.input object Posts return true or false
+
+	// method delete Posts.input object Posts return true or false
 	@Transactional
 	public boolean delete(Posts p) {
 		try {
-			postsDAO.delete(p);
-			return true;
+			if (p != null) {
+				postsDAO.delete(p);
+				return true;
+			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 		return false;
 	}
-	//method active Posts.input posts_id return true or false
+
+	// method active Posts.input posts_id return true or false
 	@Transactional
 	public boolean active(int id) {
 		try {
@@ -63,7 +72,8 @@ public class PostsServiceImpl implements PostsService {
 		}
 		return false;
 	}
-	//method deactive Posts.input posts_id return true or false
+
+	// method deactive Posts.input posts_id return true or false
 	@Transactional
 	public boolean deactive(int id) {
 		try {
@@ -78,7 +88,8 @@ public class PostsServiceImpl implements PostsService {
 		}
 		return false;
 	}
-	//method get Posts.input posts_id return object Posts
+
+	// method get Posts.input posts_id return object Posts
 	@Transactional
 	public Posts get(int id) {
 		try {
@@ -90,7 +101,8 @@ public class PostsServiceImpl implements PostsService {
 		}
 		return null;
 	}
-	//method getAllPostsByUser.input account_id return list object Posts
+
+	// method getAllPostsByUser.input account_id return list object Posts
 	@Transactional
 	public List<Posts> getAllPostsByUser(int id) {
 		try {
@@ -102,7 +114,8 @@ public class PostsServiceImpl implements PostsService {
 		}
 		return null;
 	}
-	//method getAllPostsActive.return list object Posts
+
+	// method getAllPostsActive.return list object Posts
 	@Transactional
 	public List<Posts> getAllPostsActive() {
 		try {
@@ -115,7 +128,8 @@ public class PostsServiceImpl implements PostsService {
 		}
 		return null;
 	}
-	//method getAllPostsDeactive.return list object Posts
+
+	// method getAllPostsDeactive.return list object Posts
 	@Transactional
 	public List<Posts> getAllPostsDeactive() {
 		try {
@@ -128,11 +142,12 @@ public class PostsServiceImpl implements PostsService {
 		}
 		return null;
 	}
-	//method getAllPostsByContent.input content return list object Posts
+
+	// method getAllPostsByContent.input content return list object Posts
 	@Transactional
 	public List<Posts> getAllPostsByContent(String content) {
 		try {
-			String query = "from Posts where content like '%"+content+"%'";
+			String query = "from Posts where content like '%" + content + "%'";
 			List<Posts> posts = postsDAO.getAll(query);
 			if (posts != null)
 				return posts;
@@ -141,11 +156,12 @@ public class PostsServiceImpl implements PostsService {
 		}
 		return null;
 	}
-	//method getAllPostsTop
+
+	// method getAllPostsTop
 	@Transactional
 	public List<Posts> getAllPostsTop() {
 		try {
-			String query = "from posts where status = 1 order by create_at desc limit 10";
+			String query = "from Posts where status = 1 order by create_at desc limit 10";
 			List<Posts> posts = postsDAO.getAll(query);
 			if (posts != null)
 				return posts;

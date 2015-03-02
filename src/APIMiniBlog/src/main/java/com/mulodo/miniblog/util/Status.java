@@ -55,8 +55,6 @@ public class Status {
 	public static final int STATUS_2009 = 2009;
 	//error: change password failled
 	public static final int STATUS_2010 = 2010;
-	//error: expired token
-	public static final int STATUS_2011 = 2011;
 	
 	//error table posts
 	//error: create posts failled

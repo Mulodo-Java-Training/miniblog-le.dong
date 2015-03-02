@@ -89,6 +89,23 @@ public class AccountServiceImpl implements AccountService {
 		return false;
 	}
 
+	// method changePassword.input id_account, oldpassword, newpassword return
+	// true or false
+	@Transactional
+	public boolean changePassword(int id, String old_password,
+			String new_password) {
+		try {
+			Account acc = accountDAO.findByID(id);
+			if (acc != null) {
+				accountDAO.update(acc);
+				return true;
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return false;
+	}
+
 	// method checkUser.input username return true or false
 	@Transactional
 	public boolean checkUser(String username) {
@@ -169,12 +186,28 @@ public class AccountServiceImpl implements AccountService {
 		cal.add(Calendar.DAY_OF_MONTH, 1);
 		return cal.getTime();
 	}
-	//method delete Token
+
+	// method delete Token
 	@Transactional
 	public boolean deleteToken(String accesstoken) {
 		boolean result = false;
 		try {
 			result = tokenService.deleteToken(accesstoken);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return result;
+	}
+
+	@Transactional
+	public boolean deleteUser(String username) {
+		boolean result = false;
+		try {
+			Account a = accountDAO.findByUsername(username);
+			if (a != null)
+			{
+				result = accountDAO.delete(a.getId());
+			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}

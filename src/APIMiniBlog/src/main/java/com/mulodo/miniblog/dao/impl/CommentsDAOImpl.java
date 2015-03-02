@@ -18,15 +18,14 @@ public class CommentsDAOImpl implements CommentsDAO {
 	SessionFactory sessionFactory;
 	//method create Comments,input object Comments return true or false
 	@Override
-	public boolean create(Comments c) {
+	public int create(Comments c) {
 		Session session = sessionFactory.getCurrentSession();
 		try {
-			session.save(c);
-			return true;
+			return (Integer) session.save(c);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		return false;
+		return 0;
 	}
 	//method update Comments,input object Comments return true or false
 	@Override

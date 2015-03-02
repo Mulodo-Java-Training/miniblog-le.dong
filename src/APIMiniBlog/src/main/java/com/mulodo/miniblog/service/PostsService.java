@@ -5,7 +5,7 @@ import java.util.List;
 import com.mulodo.miniblog.model.Posts;
 
 public interface PostsService {
-	public boolean create(Posts p);
+	public int create(Posts p);
 	public boolean update(Posts p);
 	public boolean delete(Posts p);
 	public boolean active(int id);
