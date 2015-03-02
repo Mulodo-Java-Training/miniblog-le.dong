@@ -1,5 +1,6 @@
 package junittest.resource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -96,8 +97,13 @@ public class PostsControllerTest implements PostsService{
 
 	@Override
 	public List<Posts> getAllPostsActive() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Posts> list = new ArrayList<Posts>();
+		Posts p = new Posts();
+		p.setId(1);
+		p.setTitle("title");
+		p.setContent("content");
+		list.add(p);
+		return list;
 	}
 
 	@Override
@@ -108,7 +114,16 @@ public class PostsControllerTest implements PostsService{
 
 	@Override
 	public List<Posts> getAllPostsByUser(int id) {
-		// TODO Auto-generated method stub
+		List<Posts> list = new ArrayList<Posts>();
+		Posts p = new Posts();
+		p.setTitle("title");
+		p.setContent("content");
+		if(id==1)
+		{
+			list.add(p);
+			list.add(p);
+			return list;
+		}
 		return null;
 	}
 

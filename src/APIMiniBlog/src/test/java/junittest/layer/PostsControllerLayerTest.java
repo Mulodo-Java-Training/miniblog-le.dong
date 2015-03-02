@@ -232,5 +232,22 @@ public class PostsControllerLayerTest {
 		Response respone = postsController.get(4);
 		assertEquals(Status.STATUS_3005, respone.getStatus());
 	}
+	@Test
+	public void PostsController_GetAllPosts_200() {
+		Response respone = postsController.getAllActive();
+		assertEquals(Status.STATUS_200, respone.getStatus());
+	}
+
+	@Test
+	public void PostsController_GetAllPostsByUser_200() {
+		Response respone = postsController.getPostsOfUser("token");
+		assertEquals(Status.STATUS_200, respone.getStatus());
+	}
+
+	@Test
+	public void PostsController_GetAllPostsByUser_3006() {
+		Response respone = postsController.getPostsOfUser("errortoken");
+		assertEquals(Status.STATUS_3006, respone.getStatus());
+	}
 
 }

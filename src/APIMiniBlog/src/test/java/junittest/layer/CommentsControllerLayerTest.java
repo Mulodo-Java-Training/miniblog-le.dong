@@ -149,4 +149,26 @@ public class CommentsControllerLayerTest {
 		Response respone = commentsController.delete(3, 2, "token");
 		assertEquals(Status.STATUS_4009, respone.getStatus());
 	}
+	@Test
+	public void CommentsController_GetAllCommentsByUser_200() {
+		Response respone = commentsController.getCommentsOfUser("token");
+		assertEquals(Status.STATUS_200, respone.getStatus());
+	}
+
+	@Test
+	public void CommentsController_GetAllCommentsByUser_4005() {
+		Response respone = commentsController.getCommentsOfUser("errortoken");
+		assertEquals(Status.STATUS_4005, respone.getStatus());
+	}
+	@Test
+	public void CommentsController_GetAllCommentsForPosts_200() {
+		Response respone = commentsController.getCommentsOfPosts(1);
+		assertEquals(Status.STATUS_200, respone.getStatus());
+	}
+
+	@Test
+	public void CommentsController_GetAllCommentsForPosts_4006() {
+		Response respone = commentsController.getCommentsOfPosts(99999);
+		assertEquals(Status.STATUS_4006, respone.getStatus());
+	}
 }

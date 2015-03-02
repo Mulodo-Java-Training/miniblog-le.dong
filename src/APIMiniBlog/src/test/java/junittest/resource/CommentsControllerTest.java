@@ -1,5 +1,6 @@
 package junittest.resource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -85,13 +86,27 @@ public class CommentsControllerTest implements CommentsService{
 
 	@Override
 	public List<Comments> getCommentsOfUser(int id_acc) {
-		// TODO Auto-generated method stub
+		List<Comments> list = new ArrayList<Comments>();
+		if(id_acc==1)
+		{
+			Comments c = new Comments();
+			c.setComment("comment");
+			list.add(c);
+			return list;
+		}
 		return null;
 	}
 
 	@Override
 	public List<Comments> getCommentsOfPosts(int id_posts) {
-		// TODO Auto-generated method stub
+		List<Comments> list = new ArrayList<Comments>();
+		if(id_posts==1)
+		{
+			Comments c = new Comments();
+			c.setComment("comment");
+			list.add(c);
+			return list;
+		}
 		return null;
 	}
 
