@@ -11,6 +11,8 @@ public class Status {
     public final static String FIRSTNAME_STRING_RANGE = "[A-Za-z0-9]{1,32}";
 
     public final static String LASTNAME_STRING_RANGE = "[A-Za-z0-9]{1,32}";
+    
+    public final static String EMAIL_STRING_RANGE = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
     public final static String ACCESS_TOKEN_STRING_RANGE = "[a-f0-9]{64}";
 
@@ -55,6 +57,8 @@ public class Status {
 	public static final int STATUS_2009 = 2009;
 	//error: change password failled
 	public static final int STATUS_2010 = 2010;
+	//error: email is existed
+    public static final int STATUS_2011 = 2011;
 	
 	//error table posts
 	//error: create posts failled

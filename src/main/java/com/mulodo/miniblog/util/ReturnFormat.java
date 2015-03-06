@@ -59,7 +59,7 @@ public class ReturnFormat {
 				break;
 			case 2011:
 				error_code = 2011;
-				description = "expired token!please login!";
+				description = "email is existed!";
 				break;
 			case 3001:
 				error_code = 3001;

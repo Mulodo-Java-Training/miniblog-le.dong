@@ -11,7 +11,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.mulodo.miniblog.form.SignInform;
-import com.mulodo.miniblog.model.Account;
 import com.mulodo.miniblog.model.Token;
 import com.mulodo.miniblog.service.AccountService;
 import com.mulodo.miniblog.service.TokenService;
@@ -27,19 +26,19 @@ public class TokenLayerServiceTest {
 	@Autowired
 	private AccountService accountService;
 	
-	private static Account a;
+	private static Token token;
 	
 	@Before
 	public void setUp() {
 		SignInform form = new SignInform();
 		form.username = "user";
 		form.password = "e10adc3949ba59abbe56e057f20f883e";
-		a = accountService.login(form.username, form.password);
+		token = accountService.login(form.username, form.password);
 	}
 
 	@After
 	public void out() {
-		accountService.logout(a.getId());
+		accountService.logout(token.getAccount().getId());
 	}
 	
 	@Test
@@ -47,9 +46,9 @@ public class TokenLayerServiceTest {
 	{
 		Token t = new Token();
 		t.setAccess_token(Util.randomString());
-		t.setAccount(a);
+		t.setAccount(token.getAccount());
 		assertEquals(true, tokenService.create(t));
-		assertEquals(true, tokenService.delete(a.getId()));
+		assertEquals(true, tokenService.delete(token.getAccount().getId()));
 		assertEquals(true, tokenService.delete(-1));
 	}
 	@Test

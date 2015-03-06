@@ -53,13 +53,12 @@ public class PostsDAOImpl implements PostsDAO {
 		}
 		return false;
 	}
-	//method getAll Posts,input query return list object Posts
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Posts> getAll(String query) {
+	public List<Posts> getTopPosts() {
 		Session session = sessionFactory.getCurrentSession();
 		try {
-			List<Posts> posts = session.createQuery(query).list();
+			List<Posts> posts = session.createQuery("from Posts where status = 1 order by create_at desc limit 10").list();
 			if (posts != null)
 				return posts;
 		} catch (Exception e) {
@@ -67,6 +66,48 @@ public class PostsDAOImpl implements PostsDAO {
 		}
 		return null;
 	}
+	//method getAll Posts,input query return list object Posts
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Posts> getAllActive() {
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			List<Posts> posts = session.createQuery("from Posts where status = 1").list();
+			if (posts != null)
+				return posts;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	//method getAll Posts,input query return list object Posts
+		@SuppressWarnings("unchecked")
+		@Override
+		public List<Posts> getAllDeactive() {
+			Session session = sessionFactory.getCurrentSession();
+			try {
+				List<Posts> posts = session.createQuery("from Posts where status = 0").list();
+				if (posts != null)
+					return posts;
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+			return null;
+		}
+		//method getAll Posts,input query return list object Posts
+		@SuppressWarnings("unchecked")
+		@Override
+		public List<Posts> search(String description) {
+			Session session = sessionFactory.getCurrentSession();
+			try {
+				List<Posts> posts = session.createQuery("from Posts where title like '%" + description + "%' or content like '%" + description + "%'").list();
+				if (posts != null)
+					return posts;
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+			return null;
+		}
 	//method getAllPostsByUser ,input account_id return list object Posts
 	@SuppressWarnings("unchecked")
 	@Override

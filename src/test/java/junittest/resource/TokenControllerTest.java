@@ -1,5 +1,6 @@
 package junittest.resource;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -23,8 +24,11 @@ public class TokenControllerTest implements TokenService{
 
 	@Override
 	public boolean deleteToken(String accesstoken) {
-		// TODO Auto-generated method stub
-		return false;
+	    if(accesstoken.equals("delete"))
+        {
+            return true;
+        }
+        return false;
 	}
 
 	@Override
@@ -38,5 +42,22 @@ public class TokenControllerTest implements TokenService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+    @Override
+    public int checkExpiredDate(String accesstoken)
+    {
+        if(accesstoken.equals("expired"))
+        {
+            return 1;
+        }
+        return 0;
+    }
+
+    @Override
+    public Date sumationExpiredDate()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

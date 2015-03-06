@@ -232,6 +232,19 @@ public class PostsControllerLayerTest {
 		Response respone = postsController.get(4);
 		assertEquals(Status.STATUS_3005, respone.getStatus());
 	}
+	
+	@Test
+    public void PostsController_Search_200() {
+        Response respone = postsController.search("chelsea");
+        assertEquals(Status.STATUS_200, respone.getStatus());
+    }
+	
+	@Test
+    public void PostsController_Search_3006() {
+        Response respone = postsController.search("arsenal");
+        assertEquals(Status.STATUS_3006, respone.getStatus());
+    }
+	
 	@Test
 	public void PostsController_GetAllPosts_200() {
 		Response respone = postsController.getAllActive();

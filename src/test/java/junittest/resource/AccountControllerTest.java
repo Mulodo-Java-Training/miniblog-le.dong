@@ -1,7 +1,6 @@
 package junittest.resource;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -21,13 +20,13 @@ public class AccountControllerTest implements AccountService{
 	}
 
 	@Override
-	public Account login(String username, String password) {
-		Account a = new Account();
-		Token t = new Token();
+	public Token login(String username, String password) {
+		Account acc = new Account();
+		Token token = new Token();
 		if(username.equals("login200")) {
-			a.setUsername("login200");
-			t.setAccess_token("login");
-			return a;
+			acc.setUsername("login200");
+			token.setAccess_token("login");
+			return token;
 		}
 		return null;
 	}
@@ -61,12 +60,6 @@ public class AccountControllerTest implements AccountService{
 		if(acc.getLastname().equals("update200")) {
 			return true;
 		}
-		return false;
-	}
-
-	@Override
-	public boolean createToken(Token t) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -114,37 +107,17 @@ public class AccountControllerTest implements AccountService{
 	}
 
 	@Override
-	public int checkExpiredDate(String accesstoken) {
-		if(accesstoken.equals("expired"))
-		{
-			return 1;
-		}
-		return 0;
-	}
-
-	@Override
-	public Date sumationExpiredDate() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean deleteToken(String accesstoken) {
-		if(accesstoken.equals("delete"))
-		{
-			return true;
-		}
-		return false;
-	}
-
-	@Override
-	public boolean changePassword(int id, String old_password,
+	public Token changePassword(int id, String old_password,
 			String new_password) {
+	    Account acc = new Account();
+	    acc.setId(id);
 		if(new_password.equals("1234567"))
 		{
-			return true;
+		    Token token = new Token();
+		    token.setAccount(acc);
+			return token;
 		}
-		return false;
+		return null;
 	}
 
 	@Override
@@ -152,5 +125,14 @@ public class AccountControllerTest implements AccountService{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+    @Override
+    public boolean checkEmail(String email)
+    {
+        if(email.equals("register2001@gmail.com")) {
+            return false;
+        }
+        return true;
+    }
 
 }

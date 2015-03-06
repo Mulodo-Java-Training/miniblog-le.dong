@@ -1,5 +1,7 @@
 package com.mulodo.miniblog.service.impl;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +14,10 @@ import com.mulodo.miniblog.service.TokenService;
 
 @Service
 public class TokenServiceImpl implements TokenService {
-	//variable TokenDAO
+
 	@Autowired
 	TokenDAO tokenDAO;
-	//method create Token.input object Token return true or false
+
 	@Transactional
 	public boolean create(Token t) {
 		try {
@@ -26,7 +28,7 @@ public class TokenServiceImpl implements TokenService {
 		}
 		return false;
 	}
-	//method delete Token.input account_id return true or false
+
 	@Transactional
 	public boolean delete(int id_acc) {
 		try {
@@ -42,7 +44,7 @@ public class TokenServiceImpl implements TokenService {
 		}
 		return false;
 	}
-	//method getAllTokenOfUser.input account_id return list object Token
+
 	@Transactional
 	public List<Token> getAllTokenOfUser(int id_acc) {
 		try {
@@ -54,7 +56,7 @@ public class TokenServiceImpl implements TokenService {
 		}
 		return null;
 	}
-	//method getTokenByAccesstoken.input accesstoken return object Token
+
 	@Transactional
 	public Token getTokenByAccesstoken(String accesstoken) {
 		try {
@@ -66,6 +68,7 @@ public class TokenServiceImpl implements TokenService {
 		}
 		return null;
 	}
+	
 	@Transactional
 	public boolean deleteToken(String accesstoken) {
 		try {
@@ -79,5 +82,19 @@ public class TokenServiceImpl implements TokenService {
 		}
 		return false;
 	}
+	
+    @Transactional
+    public int checkExpiredDate(String accesstoken) {
+        Token t = tokenDAO.getTokenByAccesstoken(accesstoken);
+        Calendar cal = Calendar.getInstance();
+        return cal.getTime().compareTo(t.getExpired_at());
+    }
+
+    @Transactional
+    public Date sumationExpiredDate() {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_MONTH, 1);
+        return cal.getTime();
+    }
 
 }

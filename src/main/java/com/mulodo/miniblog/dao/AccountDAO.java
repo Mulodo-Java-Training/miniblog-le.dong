@@ -5,11 +5,12 @@ import java.util.List;
 import com.mulodo.miniblog.model.Account;
 
 public interface AccountDAO {
-	public boolean insert(Account acc);
+	public void insert(Account acc);
 	public Account login(String username,String password);
 	public Account findByID(int id);
-	public List<Account> getAll(String query);
-	public boolean update(Account acc);
-	public boolean delete(int id);
+	public List<Account> search(String name);
+	public void update(Account acc);
+	public void delete(int id);
 	public Account findByUsername(String username);
+	public Account findByEmail(String email);
 }

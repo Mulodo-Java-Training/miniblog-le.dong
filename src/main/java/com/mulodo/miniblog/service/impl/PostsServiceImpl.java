@@ -119,8 +119,7 @@ public class PostsServiceImpl implements PostsService {
 	@Transactional
 	public List<Posts> getAllPostsActive() {
 		try {
-			String query = "from Posts where status = 1";
-			List<Posts> posts = postsDAO.getAll(query);
+			List<Posts> posts = postsDAO.getAllActive();
 			if (posts != null)
 				return posts;
 		} catch (Exception e) {
@@ -133,8 +132,7 @@ public class PostsServiceImpl implements PostsService {
 	@Transactional
 	public List<Posts> getAllPostsDeactive() {
 		try {
-			String query = "from Posts where status = 0";
-			List<Posts> posts = postsDAO.getAll(query);
+			List<Posts> posts = postsDAO.getAllDeactive();
 			if (posts != null)
 				return posts;
 		} catch (Exception e) {
@@ -145,10 +143,9 @@ public class PostsServiceImpl implements PostsService {
 
 	// method getAllPostsByContent.input content return list object Posts
 	@Transactional
-	public List<Posts> getAllPostsByContent(String content) {
+	public List<Posts> search(String descrition) {
 		try {
-			String query = "from Posts where content like '%" + content + "%'";
-			List<Posts> posts = postsDAO.getAll(query);
+			List<Posts> posts = postsDAO.search(descrition);
 			if (posts != null)
 				return posts;
 		} catch (Exception e) {
@@ -161,8 +158,7 @@ public class PostsServiceImpl implements PostsService {
 	@Transactional
 	public List<Posts> getAllPostsTop() {
 		try {
-			String query = "from Posts where status = 1 order by create_at desc limit 10";
-			List<Posts> posts = postsDAO.getAll(query);
+			List<Posts> posts = postsDAO.getTopPosts();
 			if (posts != null)
 				return posts;
 		} catch (Exception e) {

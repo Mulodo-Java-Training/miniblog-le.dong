@@ -1,7 +1,6 @@
 package com.mulodo.miniblog.service.impl;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,42 +12,50 @@ import com.mulodo.miniblog.model.Account;
 import com.mulodo.miniblog.model.Token;
 import com.mulodo.miniblog.service.AccountService;
 import com.mulodo.miniblog.service.TokenService;
+import com.mulodo.miniblog.util.MD5Hash;
+import com.mulodo.miniblog.util.Util;
 
 @Service
 public class AccountServiceImpl implements AccountService {
-	// variable AccountDAO
+
 	@Autowired
 	AccountDAO accountDAO;
-	// variable TokenService
+
 	@Autowired
 	TokenService tokenService;
 
-	// method register.input object Account return true or false
 	@Transactional
 	public boolean register(Account acc) {
 		try {
 			accountDAO.insert(acc);
 			return true;
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
+			return false;
 		}
-		return false;
+		
 	}
 
-	// method login.input username and password return object Account
 	@Transactional
-	public Account login(String username, String password) {
+	public Token login(String username, String password) {
 		try {
 			Account a = accountDAO.login(username, password);
 			if (a != null)
-				return a;
+			{
+			    Token token = new Token();
+		        token.setAccess_token(Util.randomString());
+		        token.setCreate_at(Calendar.getInstance().getTime());
+		        token.setExpired_at(tokenService.sumationExpiredDate());
+		        token.setAccount(a);
+		        tokenService.create(token);
+				return token;
+			}
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 		return null;
 	}
 
-	// method getInfo.input account_id return object Account
 	@Transactional
 	public Account getInfo(int id) {
 		try {
@@ -61,14 +68,10 @@ public class AccountServiceImpl implements AccountService {
 		return null;
 	}
 
-	// method searchByName.input keyword name return list object Account
 	@Transactional
 	public List<Account> searchByName(String name) {
-		String query = "from Account where username like '%" + name
-				+ "%' or lastname like '%" + name + "%' or firstname like '%"
-				+ name + "%' ";
 		try {
-			List<Account> accounts = accountDAO.getAll(query);
+			List<Account> accounts = accountDAO.search(name);
 			if (accounts != null)
 				return accounts;
 		} catch (Exception e) {
@@ -77,7 +80,6 @@ public class AccountServiceImpl implements AccountService {
 		return null;
 	}
 
-	// method update info Account.input object Account return true or false
 	@Transactional
 	public boolean update(Account acc) {
 		try {
@@ -89,24 +91,28 @@ public class AccountServiceImpl implements AccountService {
 		return false;
 	}
 
-	// method changePassword.input id_account, oldpassword, newpassword return
-	// true or false
 	@Transactional
-	public boolean changePassword(int id, String old_password,
+	public Token changePassword(int id, String old_password,
 			String new_password) {
 		try {
 			Account acc = accountDAO.findByID(id);
 			if (acc != null) {
+				acc.setPassword(MD5Hash.MD5(new_password));
 				accountDAO.update(acc);
-				return true;
+				Token token = new Token();
+                token.setAccess_token(Util.randomString());
+                token.setCreate_at(Calendar.getInstance().getTime());
+                token.setExpired_at(tokenService.sumationExpiredDate());
+                token.setAccount(acc);
+                tokenService.create(token);
+				return token;
 			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		return false;
+		return null;
 	}
 
-	// method checkUser.input username return true or false
 	@Transactional
 	public boolean checkUser(String username) {
 		try {
@@ -119,8 +125,20 @@ public class AccountServiceImpl implements AccountService {
 		}
 		return false;
 	}
+	
+    @Transactional
+    public boolean checkEmail(String email) {
+        try {
+            Account a = accountDAO.findByEmail(email);
+            if (a == null) {
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
 
-	// method findByUsername.input username return object Account
 	@Transactional
 	public Account findByUsername(String username) {
 		try {
@@ -133,7 +151,6 @@ public class AccountServiceImpl implements AccountService {
 		return null;
 	}
 
-	// method logout.input account_id return true or false
 	@Transactional
 	public boolean logout(int account_id) {
 		boolean result = false;
@@ -145,19 +162,6 @@ public class AccountServiceImpl implements AccountService {
 		return result;
 	}
 
-	// method createToken.input object Token return true or false
-	@Transactional
-	public boolean createToken(Token t) {
-		try {
-			tokenService.create(t);
-			return true;
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return false;
-	}
-
-	// method checkToken.input accesstoken return object Account
 	@Transactional
 	public Account checkToken(String accesstoken) {
 		try {
@@ -171,47 +175,19 @@ public class AccountServiceImpl implements AccountService {
 		return null;
 	}
 
-	// method checkExpiredDate token
-	@Transactional
-	public int checkExpiredDate(String accesstoken) {
-		Token t = tokenService.getTokenByAccesstoken(accesstoken);
-		Calendar cal = Calendar.getInstance();
-		return cal.getTime().compareTo(t.getExpired_at());
-	}
-
-	// method sumationExpiredDate token
-	@Transactional
-	public Date sumationExpiredDate() {
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DAY_OF_MONTH, 1);
-		return cal.getTime();
-	}
-
-	// method delete Token
-	@Transactional
-	public boolean deleteToken(String accesstoken) {
-		boolean result = false;
-		try {
-			result = tokenService.deleteToken(accesstoken);
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return result;
-	}
-
 	@Transactional
 	public boolean deleteUser(String username) {
-		boolean result = false;
 		try {
 			Account a = accountDAO.findByUsername(username);
 			if (a != null)
 			{
-				result = accountDAO.delete(a.getId());
+				accountDAO.delete(a.getId());
+				return true;
 			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		return result;
+		return false;
 	}
 
 }

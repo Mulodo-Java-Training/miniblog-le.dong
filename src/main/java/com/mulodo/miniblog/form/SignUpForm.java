@@ -6,8 +6,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.ws.rs.FormParam;
 
-import org.hibernate.validator.constraints.Email;
-
 import com.mulodo.miniblog.model.Account;
 import com.mulodo.miniblog.util.MD5Hash;
 import com.mulodo.miniblog.util.Status;
@@ -24,20 +22,20 @@ public class SignUpForm {
     public String password;
 
     @NotNull
-    @Email
+    @Pattern(regexp = Status.EMAIL_STRING_RANGE)
     @FormParam("email")
     public String email;
 
     public Account setData()
     {
-    	Account a = new Account();
-        a.setUsername(this.username);
-        a.setPassword(MD5Hash.MD5(this.password));
-        a.setEmail(this.email);
-        a.setLastname("");
-        a.setFirstname("");
-        a.setCreate_at(Calendar.getInstance().getTime());
-        a.setModified_at(Calendar.getInstance().getTime());
-        return a;
+    	Account account = new Account();
+        account.setUsername(this.username);
+        account.setPassword(MD5Hash.MD5(this.password));
+        account.setEmail(this.email);
+        account.setLastname("");
+        account.setFirstname("");
+        account.setCreate_at(Calendar.getInstance().getTime());
+        account.setModified_at(Calendar.getInstance().getTime());
+        return account;
     }
 }

@@ -88,7 +88,7 @@ public class AccountControllerLayerTest {
 
 	@Test
 	public void AccountController_GetInfo_2006() {
-		Response respone = accountController.getInfo(-1);
+		Response respone = accountController.getInfo(9999);
 		assertEquals(Status.STATUS_2006, respone.getStatus());
 	}
 

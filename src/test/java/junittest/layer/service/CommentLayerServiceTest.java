@@ -14,9 +14,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.mulodo.miniblog.form.AddCommentsForm;
 import com.mulodo.miniblog.form.CreatePostsForm;
 import com.mulodo.miniblog.form.SignInform;
-import com.mulodo.miniblog.model.Account;
 import com.mulodo.miniblog.model.Comments;
 import com.mulodo.miniblog.model.Posts;
+import com.mulodo.miniblog.model.Token;
 import com.mulodo.miniblog.service.AccountService;
 import com.mulodo.miniblog.service.CommentsService;
 import com.mulodo.miniblog.service.PostsService;
@@ -34,7 +34,7 @@ public class CommentLayerServiceTest {
 	@Autowired
 	private CommentsService commentsService;
 
-	private static Account a;
+	private static Token token;
 
 	private static Posts p;
 
@@ -45,11 +45,11 @@ public class CommentLayerServiceTest {
 		SignInform form = new SignInform();
 		form.username = "user";
 		form.password = "e10adc3949ba59abbe56e057f20f883e";
-		a = accountService.login(form.username, form.password);
+		token = accountService.login(form.username, form.password);
 		CreatePostsForm postsform = new CreatePostsForm();
 		postsform.title = "testposttitle";
 		postsform.content = "testpostcontent";
-		int postsid = postsService.create(postsform.setData(a));
+		int postsid = postsService.create(postsform.setData(token.getAccount()));
 		p = postsService.get(postsid);
 
 	}
@@ -57,7 +57,7 @@ public class CommentLayerServiceTest {
 	@After
 	public void out() {
 		postsService.delete(p);
-		accountService.logout(a.getId());
+		accountService.logout(token.getAccount().getId());
 	}
 
 	@Test
@@ -66,7 +66,7 @@ public class CommentLayerServiceTest {
 		AddCommentsForm commentadd = new AddCommentsForm();
 		commentadd.comment = "testcomment";
 
-		int commentid = commentsService.create(commentadd.setData(a, p));
+		int commentid = commentsService.create(commentadd.setData(token.getAccount(), p));
 		c = commentsService.get(commentid);
 		c.setComment("testcomment2");
 
@@ -86,11 +86,11 @@ public class CommentLayerServiceTest {
 		AddCommentsForm commentadd = new AddCommentsForm();
 		commentadd.comment = "testcomment";
 
-		int commentid = commentsService.create(commentadd.setData(a, p));
+		int commentid = commentsService.create(commentadd.setData(token.getAccount(), p));
 		int commentlist = commentsService.getCommentsOfPosts(p.getId()).size();
 		assertTrue(commentlist > 0);
 
-		commentlist = commentsService.getCommentsOfUser(a.getId()).size();
+		commentlist = commentsService.getCommentsOfUser(token.getAccount().getId()).size();
 		assertTrue(commentlist > 0);
 
 		Comments comment = commentsService.get(commentid);

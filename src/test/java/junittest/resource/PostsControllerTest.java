@@ -128,9 +128,18 @@ public class PostsControllerTest implements PostsService{
 	}
 
 	@Override
-	public List<Posts> getAllPostsByContent(String content) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Posts> search(String description) {
+	    List<Posts> list = new ArrayList<Posts>();
+        Posts p = new Posts();
+        p.setTitle("title");
+        p.setContent("content");
+        if(description.equals("chelsea"))
+        {
+            list.add(p);
+            list.add(p);
+            return list;
+        }
+        return null;
 	}
 
 	@Override

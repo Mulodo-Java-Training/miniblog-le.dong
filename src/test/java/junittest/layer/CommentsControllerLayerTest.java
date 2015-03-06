@@ -33,7 +33,8 @@ public class CommentsControllerLayerTest {
 	@Test
 	public void CommentsController_AddComments_1001() {
 		AddCommentsForm form = new AddCommentsForm();
-		Response respone = commentsController.add(1, "token", form);
+		form.comment = null;
+		Response respone = commentsController.add(0, "token", form);
 		assertEquals(Status.STATUS_1001, respone.getStatus());
 	}
 

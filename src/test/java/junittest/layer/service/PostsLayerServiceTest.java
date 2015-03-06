@@ -13,8 +13,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.mulodo.miniblog.form.CreatePostsForm;
 import com.mulodo.miniblog.form.SignInform;
-import com.mulodo.miniblog.model.Account;
 import com.mulodo.miniblog.model.Posts;
+import com.mulodo.miniblog.model.Token;
 import com.mulodo.miniblog.service.AccountService;
 import com.mulodo.miniblog.service.PostsService;
 
@@ -27,19 +27,19 @@ public class PostsLayerServiceTest {
 	@Autowired
 	private AccountService accountService;
 
-	private static Account a;
+	private static Token token;
 
 	@Before
 	public void setUp() {
 		SignInform form = new SignInform();
 		form.username = "user";
 		form.password = "e10adc3949ba59abbe56e057f20f883e";
-		a = accountService.login(form.username, form.password);
+		token = accountService.login(form.username, form.password);
 	}
 
 	@After
 	public void out() {
-		accountService.logout(a.getId());
+		accountService.logout(token.getAccount().getId());
 	}
 
 	@Test
@@ -48,7 +48,7 @@ public class PostsLayerServiceTest {
 		CreatePostsForm form = new CreatePostsForm();
 		form.title = "testposttitle";
 		form.content = "testpostcontent";
-		int postsid = postsService.create(form.setData(a));
+		int postsid = postsService.create(form.setData(token.getAccount()));
 		assertTrue(postsid > 0);
 
 		Posts p = postsService.get(postsid);
@@ -74,18 +74,18 @@ public class PostsLayerServiceTest {
 		CreatePostsForm form = new CreatePostsForm();
 		form.title = "testposttitle";
 		form.content = "testpostcontent";
-		int postsid = postsService.create(form.setData(a));
+		int postsid = postsService.create(form.setData(token.getAccount()));
 		assertTrue(postsid > 0);
 
 		int postlist = postsService.getAllPostsActive().size();
 		assertTrue(postlist > 0);
 		postlist = postsService.getAllPostsDeactive().size();
 		assertTrue(postlist > 0);
-		postlist = postsService.getAllPostsByUser(a.getId()).size();
+		postlist = postsService.getAllPostsByUser(token.getAccount().getId()).size();
 		assertTrue(postlist > 0);
 		postlist = postsService.getAllPostsTop().size();
 		assertTrue(postlist > 0);
-		postlist = postsService.getAllPostsByContent("t").size();
+		postlist = postsService.search("t").size();
 		assertTrue(postlist > 0);
 		Posts posts = postsService.get(postsid);
 		assertEquals("testposttitle", posts.getTitle());

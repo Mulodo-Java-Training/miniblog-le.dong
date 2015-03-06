@@ -9,6 +9,9 @@ public interface PostsDAO {
 	public boolean update(Posts p);
 	public boolean delete(Posts p);
 	public Posts get(int id);
-	public List<Posts> getAll(String query);
+	public List<Posts> getTopPosts();
+	public List<Posts> getAllActive();
+	public List<Posts> getAllDeactive();
+	public List<Posts> search(String description);
 	public List<Posts> getAllPostsByUser(int id_acc);
 }
