@@ -7,7 +7,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Edit Posts</title>
+<title>Miniblog</title>
 
 <!-- Bootstrap Core CSS -->
 <link href="css/bootstrap.css" rel="stylesheet">
@@ -48,7 +48,7 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="index.html">Mulodo VN</a>
+			<a class="navbar-brand" href="index.html">Miniblog</a>
 		</div>
 		<form class="navbar-form navbar-center" role="search">
 			<div class="form-group">
@@ -60,14 +60,15 @@
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-right">
-			
-				<li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Hi!Dong Hae <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="about.html">Profile</a></li>
-            <li><a href="contact.html">Logout</a></li>
-          </ul>
-        </li>
+
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-expanded="false">Hi!Dong
+						Hae <span class="caret"></span>
+				</a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="profile.html">Profile</a></li>
+						<li><a href="signin.html">Logout</a></li>
+					</ul></li>
 			</ul>
 		</div>
 		<!-- /.navbar-collapse -->
@@ -96,34 +97,31 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <h3 style="text-align: center;">Update Posts</h3>
-                <!-- Contact Form - Enter your email address on line 19 of the mail/contact_me.php file to make this form work. -->
-                <!-- WARNING: Some web hosts do not allow emails to be sent through forms to common mail hosts like Gmail or Yahoo. It's recommended that you use a private domain email address! -->
-                <!-- NOTE: To use the contact form, your site must be on a live web host with PHP! The form will not work locally! -->
-                <form name="editPostsForm" id="editPostsForm" novalidate>
-                    <div class="row control-group">
-                        <div class="form-group col-xs-12 floating-label-form-group controls">
-                            <label>Title</label>
-                            <input type="text" class="form-control" placeholder="Title" id="title" name="title" required data-validation-required-message="Please enter title !">
-                            <p class="help-block text-danger"></p>
-                        </div>
-                    </div>
-                    <div class="row control-group">
-                        <div class="form-group col-xs-12 floating-label-form-group controls">
-                            <label>Content</label>
-                            <textarea rows="5" class="form-control" placeholder="Content" id="content" name="content" required data-validation-required-message="Please enter a content !"></textarea>
-                            <p class="help-block text-danger"></p>
-                        </div>
-                    </div>
-                    <br>
-                    <div id="success"></div>
-                    <div class="row">
-                        <div class="form-group col-xs-12">
-                            <button type="submit" class="btn btn-default">Edit</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+				<div class="user-preview">
+					<a href="profile.html">
+						<h2 class="user-username">le.dong</h2>
+						<a href="showallposts.html?id=?" class="btn btn-show">Show All
+							Posts</a>
+					</a>
+					<p class="user-meta">Join Date: 05-03-2015</p>
+					<p class="user-information">
+						Full Name: Dong Hae <br /> Email: le.dong@gmail.com<br />
+					</p>
+					<hr>
+				</div>
+				<div class="user-preview">
+					<a href="profile.html">
+						<h2 class="user-username">vykhuong</h2>
+						<a href="showallposts.html?id=?" class="btn btn-show">Show All
+							Posts</a>
+					</a>
+					<p class="user-meta">Join Date: 03-03-2015</p>
+					<p class="user-information">
+						Full Name: Truong Vy Khuong <br /> Email: vykhuong@gmail.com<br />
+					</p>
+					<hr>
+				</div>
+			</div>
 		</div>
 	</div>
 

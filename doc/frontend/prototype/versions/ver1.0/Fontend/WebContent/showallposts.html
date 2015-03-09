@@ -7,7 +7,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Profile</title>
+<title>Miniblog</title>
 
 <!-- Bootstrap Core CSS -->
 <link href="css/bootstrap.css" rel="stylesheet">
@@ -48,7 +48,7 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="index.html">Mulodo VN</a>
+			<a class="navbar-brand" href="index.html">Miniblog</a>
 		</div>
 		<form class="navbar-form navbar-center" role="search">
 			<div class="form-group">
@@ -60,14 +60,15 @@
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-right">
-			
-				<li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Hi!Dong Hae <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="about.html">Profile</a></li>
-            <li><a href="contact.html">Logout</a></li>
-          </ul>
-        </li>
+
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-expanded="false">Hi!Dong
+						Hae <span class="caret"></span>
+				</a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="profile.html">Profile</a></li>
+						<li><a href="signin.html">Logout</a></li>
+					</ul></li>
 			</ul>
 		</div>
 		<!-- /.navbar-collapse -->
@@ -94,46 +95,62 @@
 
 	<!-- Main Content -->
 	<div class="container">
+		<form class="navbar-form navbar-center" role="search">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Content">
+			</div>
+			<button type="submit" class="btn btn-default">Search</button>
+		</form>
 		<div class="row">
 			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <h3 style="text-align: center;">Information Users</h3>
-                <!-- Contact Form - Enter your email address on line 19 of the mail/contact_me.php file to make this form work. -->
-                <!-- WARNING: Some web hosts do not allow emails to be sent through forms to common mail hosts like Gmail or Yahoo. It's recommended that you use a private domain email address! -->
-                <!-- NOTE: To use the contact form, your site must be on a live web host with PHP! The form will not work locally! -->
-                <form name="profile" id="profile" novalidate>
-                    <div class="row control-group">
-                        <div class="form-group col-xs-12 floating-label-form-group controls">
-                            <h4>Username : <span class="label label-info">le.dong</span></h4>
-                        </div>
-                    </div>
-                    <div class="row control-group">
-                        <div class="form-group col-xs-12 floating-label-form-group controls">
-                            <h4>Email : <span class="label label-info">le.dong@gmail.com</span></h4>
-                        </div>
-                    </div>
-                    <div class="row control-group">
-                        <div class="form-group col-xs-12 floating-label-form-group controls">
-                            <h4>Firstname : <span class="label label-info">dong</span></h4>
-                        </div>
-                    </div>
-                    <div class="row control-group">
-                        <div class="form-group col-xs-12 floating-label-form-group controls">
-                            <h4>Lastname : <span class="label label-info">hae</span></h4>
-                        </div>
-                    </div>
-                    <div class="row control-group">
-                        <div class="form-group col-xs-12 floating-label-form-group controls">
-                            <h4>Modified Date : <span class="label label-info">04/03/2015 00:00:00</span></h4>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="form-group col-xs-12">
-                            <button type="submit" class="btn btn-default">Edit</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+				<div class="post-preview">
+					<a href="posts.html">
+						<h2 class="post-title">Science has not yet mastered prophecy
+						</h2>
+					</a>
+					<p class="post-meta">
+						Posted by <a href="about.html">Start Bootstrap</a> on August 24,
+						2014
+					</p>
+					<p class="post-subtitle">We predict too much for the next year
+						and yet far too little for the next ten.</p>
+				</div>
+				<hr>
+				<div class="post-preview">
+					<a href="post.html">
+						<h2 class="post-title">I believe every human has a finite
+							number of heartbeats. I don't intend to waste any of mine.</h2>
+					</a>
+					<p class="post-meta">
+						Posted by <a href="#">Start Bootstrap</a> on September 18, 2014
+					</p>
+				</div>
+				<hr>
+				<div class="post-preview">
+					<a href="post.html">
+						<h2 class="post-title">Science has not yet mastered prophecy
+						</h2>
+						<h3 class="post-subtitle">We predict too much for the next
+							year and yet far too little for the next ten.</h3>
+					</a>
+					<p class="post-meta">
+						Posted by <a href="#">Start Bootstrap</a> on August 24, 2014
+					</p>
+				</div>
+				<hr>
+				<div class="post-preview">
+					<a href="post.html">
+						<h2 class="post-title">Failure is not an option</h2>
+						<h3 class="post-subtitle">Many say exploration is part of our
+							destiny, but itâs actually our duty to future generations.</h3>
+					</a>
+					<p class="post-meta">
+						Posted by <a href="#">Start Bootstrap</a> on July 8, 2014
+					</p>
+				</div>
+				<hr>
+
+			</div>
 		</div>
 	</div>
 

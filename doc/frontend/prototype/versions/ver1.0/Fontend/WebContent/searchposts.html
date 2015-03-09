@@ -7,7 +7,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Create Posts</title>
+<title>Search</title>
 
 <!-- Bootstrap Core CSS -->
 <link href="css/bootstrap.css" rel="stylesheet">
@@ -48,7 +48,7 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="index.html">Mulodo VN</a>
+			<a class="navbar-brand" href="index.html">Miniblog</a>
 		</div>
 		<form class="navbar-form navbar-center" role="search">
 			<div class="form-group">
@@ -60,14 +60,15 @@
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-right">
-			
-				<li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Hi!Dong Hae <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="about.html">Profile</a></li>
-            <li><a href="contact.html">Logout</a></li>
-          </ul>
-        </li>
+
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-expanded="false">Hi!Dong
+						Hae <span class="caret"></span>
+				</a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="profile.html">Profile</a></li>
+						<li><a href="singin.html">Logout</a></li>
+					</ul></li>
 			</ul>
 		</div>
 		<!-- /.navbar-collapse -->
@@ -94,36 +95,26 @@
 
 	<!-- Main Content -->
 	<div class="container">
+		<form class="navbar-form navbar-center" role="search">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Content">
+			</div>
+			<button type="submit" class="btn btn-default">Search</button>
+		</form>
 		<div class="row">
 			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <p><strong>You want to update the latest information and fastest football.you can create post here!</strong></p>
-                <!-- Contact Form - Enter your email address on line 19 of the mail/contact_me.php file to make this form work. -->
-                <!-- WARNING: Some web hosts do not allow emails to be sent through forms to common mail hosts like Gmail or Yahoo. It's recommended that you use a private domain email address! -->
-                <!-- NOTE: To use the contact form, your site must be on a live web host with PHP! The form will not work locally! -->
-                <form name="createPostsForm" id="createPostsForm" novalidate>
-                    <div class="row control-group">
-                        <div class="form-group col-xs-12 floating-label-form-group controls">
-                            <label>Title</label>
-                            <input type="text" class="form-control" placeholder="Title" id="title" name="title" required data-validation-required-message="Please enter title !">
-                            <p class="help-block text-danger"></p>
-                        </div>
-                    </div>
-                    <div class="row control-group">
-                        <div class="form-group col-xs-12 floating-label-form-group controls">
-                            <label>Content</label>
-                            <textarea rows="5" class="form-control" placeholder="Content" id="content" name="content" required data-validation-required-message="Please enter a content !"></textarea>
-                            <p class="help-block text-danger"></p>
-                        </div>
-                    </div>
-                    <br>
-                    <div id="success"></div>
-                    <div class="row">
-                        <div class="form-group col-xs-12">
-                            <button type="submit" class="btn btn-default">Create</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+				<div class="post-preview">
+					<a href="posts.html">
+						<h2 class="post-title">Science has not yet mastered prophecy
+						</h2>
+					</a>
+					<p class="post-meta">
+						Posted by <a href="profile.html">le.dong</a> on 2015-04-03
+					</p>
+					<p class="post-subtitle">We predict too much for the next year
+						and yet far too little for the next ten.</p>
+				</div>
+			</div>
 		</div>
 	</div>
 
