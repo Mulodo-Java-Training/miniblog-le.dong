@@ -1,0 +1,25 @@
+
+#dialog label {
+	color: blue;
+}
+#title {
+	margin-top:5px;
+	margin-bottom:20px;
+	width:96%;
+	border-radius:5px;
+	border:black 1px solid;
+	padding:5px 0
+}
+#commentdialog,#contentposts {
+	margin-top:5px;
+	margin-bottom:20px;
+	width:96%;
+	border-radius:5px;
+	border:black 1px solid;
+	padding:5px 0;
+	resize: none;
+	position: relative;
+}
+#title,#contentposts,#commentdialog {
+	padding-left:10px
+}
