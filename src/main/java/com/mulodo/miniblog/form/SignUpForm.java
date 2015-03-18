@@ -11,7 +11,7 @@ import com.mulodo.miniblog.util.MD5Hash;
 import com.mulodo.miniblog.util.Status;
 
 public class SignUpForm {
-	@NotNull
+    @NotNull
     @Pattern(regexp = Status.USERNAME_STRING_RANGE)
     @FormParam("username")
     public String username;

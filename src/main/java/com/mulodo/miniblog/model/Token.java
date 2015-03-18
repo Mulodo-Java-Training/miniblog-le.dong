@@ -13,7 +13,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.hibernate.annotations.ForeignKey;
+
+import com.mulodo.miniblog.util.CustomJsonDateDeserializer;
+import com.mulodo.miniblog.util.CustomJsonDateSeralizer;
 
 @Entity
 @Table(name="token")
@@ -33,10 +38,14 @@ public class Token {
 	
 	@Column(columnDefinition = "TIMESTAMP(0) default CURRENT_TIMESTAMP")
 	@Temporal(TemporalType.TIMESTAMP)
+	@JsonSerialize(using = CustomJsonDateSeralizer.class)
+    @JsonDeserialize(using = CustomJsonDateDeserializer.class)
 	private Date create_at;
 	
 	@Column(columnDefinition = "TIMESTAMP(0) default CURRENT_TIMESTAMP")
 	@Temporal(TemporalType.TIMESTAMP)
+	@JsonSerialize(using = CustomJsonDateSeralizer.class)
+    @JsonDeserialize(using = CustomJsonDateDeserializer.class)
 	private Date expired_at;
 
 	public Token() {

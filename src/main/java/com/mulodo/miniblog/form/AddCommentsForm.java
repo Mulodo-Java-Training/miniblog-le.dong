@@ -12,7 +12,7 @@ import com.mulodo.miniblog.model.Posts;
 import com.mulodo.miniblog.util.Status;
 
 public class AddCommentsForm {
-	@NotNull
+    @NotNull
     @Pattern(regexp = Status.COMMENT_STRING_RANGE)
     @FormParam("comment")
     public String comment;

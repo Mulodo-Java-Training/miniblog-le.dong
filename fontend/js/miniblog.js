@@ -205,36 +205,60 @@ function userinfobyid(id){
 function formupdate(){
 	$('#header').html("Update Info Users");
 	$('#content').html("\
+			<form onSubmit='update(); return false;'>\
 					<div class='row control-group'>\
 						<div class='form-group col-xs-12 floating-label-form-group controls'>\
 							<label>Firstname</label> <input type='text' class='form-control' placeholder='Firstname' id='firstname' value='"+$firstname+"'>\
-							<p class='help-block text-danger'></p>\
+							<p id='errorfirstname' style='color:red;'></p>\
 						</div>\
 					</div>\
 					<div class='row control-group'>\
 						<div class='form-group col-xs-12 floating-label-form-group controls'>\
 							<label>Lastname</label> <input type='text' class='form-control' placeholder='Lastname' id='lastname' value='"+$lastname+"' >\
-							<p class='help-block text-danger'></p>\
+							<p id='errorlastname' style='color:red;'></p>\
 						</div>\
 					</div>\
 					<div class='row control-group'>\
 						<div class='form-group col-xs-12 floating-label-form-group controls'>\
-							<label>Password</label> <input type='password' class='form-control' placeholder='Password' id='password' required data-validation-required-message='Please enter a password !'>\
-							<p class='help-block text-danger'></p>\
+							<label>Password</label> <input type='password' class='form-control' placeholder='Password' id='password''>\
+							<p id='errorpassword' style='color:red;'></p>\
 						</div>\
 					</div>\
 					<br>\
 					<div id='success'></div>\
 					<div class='row'>\
 						<div class='form-group col-xs-12'>\
-							<button  type='submit' onclick='update();' class='btn btn-default'>Update</button>\
+							<button  type='submit' class='btn btn-default'>Update</button>\
 						</div>\
 					</div>\
-				");
+			</form>\
+		");
 	}
 function update(){
-	if($('#firstname')=="" || $('#lastname') =="" || $('#password').val()==""){alert("info and password may not be null");return;};
-		var data = "lastname="+$('#lastname').val()+"&firstname="+$('#firstname').val()+"&password="+$('#password').val();
+	var firstname = $('#firstname').val();
+	var lastname = $('#lastname').val();
+	var password = $('#password').val();
+	if(!validateFirstname(firstname)){
+		$("#errorfirstname").text(" 1 character < firstname < 32 character and not containt special character"); 
+	}else
+	{
+		$("#errorfirstname").text("");
+	}
+	if(!validateLastname(lastname)){
+		$("#errorlastname").text(" 1 character < lastname < 32 character and not containt special character"); 
+	}else
+	{
+		$("#errorlastname").text("");
+	}
+	if(!validatePassword(password)){
+		$("#errorpassword").text(" 6 character < password < 72 character and not containt special character"); 
+	}else
+	{
+		$("#errorpassword").text("");
+	}
+	if(validateFirstname(firstname) && validateLastname(lastname) && validatePassword(password))
+	{
+		var data = "lastname="+lastname+"&firstname="+firstname+"&password="+password;
 		$.ajax({
 		type: "PUT",
 		data: data,
@@ -279,41 +303,68 @@ function update(){
 		}
 		});
 	}
+	return false;
+}
 
 function formchangepass(){
 	$('#header').html("Change Passsword");
 	$('#content').html("\
+			<form onSubmit='changepass(); return false;'>\
 					<div class='row control-group'>\
 						<div class='form-group col-xs-12 floating-label-form-group controls'>\
-							<label>Old Password</label> <input type='password' class='form-control' placeholder='Old Password' id='old_password'  required data-validation-required-message='Please enter old password !'>\
-							<p class='help-block text-danger'></p>\
+							<label>Old Password</label> <input type='password' class='form-control' placeholder='Old Password' id='old_password'>\
+							<p id='erroroldpassword' style='color:red;'></p>\
 						</div>\
 					</div>\
 					<div class='row control-group'>\
 						<div class='form-group col-xs-12 floating-label-form-group controls'>\
-							<label>New Password</label> <input type='password' class='form-control' placeholder='New Password' id='new_password' required data-validation-required-message='Please enter new password !'>\
-							<p class='help-block text-danger'></p>\
+							<label>New Password</label> <input type='password' class='form-control' placeholder='New Password' id='new_password' >\
+							<p id='errornewpassword' style='color:red;'></p>\
 						</div>\
 					</div>\
 					<div class='row control-group'>\
 						<div class='form-group col-xs-12 floating-label-form-group controls'>\
-							<label>Retype Password</label> <input type='password' class='form-control' placeholder='Retype Password' id='retype_password' required data-validation-required-message='Please enter retype password !'>\
-							<p class='help-block text-danger'></p>\
+							<label>Retype Password</label> <input type='password' class='form-control' placeholder='Retype Password' id='retype_password'>\
+							<p id='errorretypepassword' style='color:red;'></p>\
 						</div>\
 					</div>\
 					<br>\
 					<div id='success'></div>\
 					<div class='row'>\
 						<div class='form-group col-xs-12'>\
-							<button  type='submit' onclick='changepass();' class='btn btn-default'>Submit</button>\
+							<button  type='submit' class='btn btn-default'>Submit</button>\
 						</div>\
 					</div>\
-				");
-	}
+			</form>\
+	");
+}
 function changepass(){
-	if($('#old_password').val()=="" || $('#new_password').val()=="" || $('#retype_password').val()==""){alert("password must not be null");return;}
-	if($('#new_password').val()!=$('#retype_password').val()){alert("retype password must match");return;}
-	var data = "old_password="+$('#old_password').val()+"&new_password="+$('#new_password').val();
+	var old_password = $('#old_password').val();
+	var new_password = $('#new_password').val();
+	var retype_password = $('#retype_password').val();
+	
+	if(!validatePassword(old_password)){
+		$("#erroroldpassword").text(" 6 character < old_password < 72 character and not containt special character"); 
+	}else
+	{
+		$("#erroroldpassword").text("");
+	}
+	if(!validatePassword(new_password)){
+		$("#errornewpassword").text(" 6 character < new_password < 72 character and not containt special character"); 
+	}else
+	{
+		$("#errornewpassword").text("");
+	}
+	if(!checkRetypePassword(new_password,retype_password)){
+		$("#errorretypepassword").text(" retype_password not match new password"); 
+	}else
+	{
+		$("#errorretypepassword").text("");
+	}
+	if(validatePassword(old_password) && validatePassword(new_password) && validatePassword(retype_password) && checkRetypePassword(new_password,retype_password))
+	{
+	
+	var data = "old_password="+old_password+"&new_password="+new_password;
 	$.ajax({
 		type: "PUT",
 		data: data,
@@ -357,6 +408,8 @@ function changepass(){
 			}
 		}
 		});
+	}
+	return false;
 }
 
 function logout() {
@@ -399,16 +452,40 @@ function logout() {
 	}
 	});
 };
-
-function getCookie(cname) {
-var name = cname + "=";
-var ca = document.cookie.split(';');
-for(var i=0; i<ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0)==' ') c = c.substring(1);
-    if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+function getusername(){
+	$('#getusername').html("Hi!"+getCookie("username")+"<span class='caret'>");
 }
-return "";
+function getCookie(cname) {
+	var name = cname + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0; i<ca.length; i++) {
+	    var c = ca[i];
+	    while (c.charAt(0)==' ') c = c.substring(1);
+	    if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+	}
+	return "";
+}
+
+function validateFirstname(firstname) {
+    var re = /[a-zA-Z0-9]{1,32}/;
+    return re.test(firstname);
+}
+
+function validateLastname(lastname) {
+    var re = /[a-zA-Z0-9]{1,32}/;
+    return re.test(lastname);
+}
+
+function validatePassword(password) {
+    var re = /[a-zA-Z0-9]{6,72}/;
+    return re.test(password);
+}
+
+function checkRetypePassword(password,retype_password) {
+    if(password == retype_password)
+    {
+    	return true;
+    }
 }
 
 

@@ -11,7 +11,7 @@ import com.mulodo.miniblog.model.Posts;
 import com.mulodo.miniblog.util.Status;
 
 public class CreatePostsForm {
-	@NotNull
+    @NotNull
     @Pattern(regexp = Status.POST_TITLE_STRING_RANGE)
     @FormParam("title")
     public String title;
@@ -30,6 +30,7 @@ public class CreatePostsForm {
     	p.setModified_at(Calendar.getInstance().getTime());
     	p.setStatus(true);
     	p.setAccount(acc);
+    	System.out.println(p + "-----" + p.getContent());
     	return p;
     }
 }

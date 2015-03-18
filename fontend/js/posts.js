@@ -46,7 +46,7 @@ function toppost(){
 						<h2 class='post-title'>"+value['title']+"</h2>\
 					</a>\
 					<p class='post-meta'>Posted by <a href='#' onclick='userinfobyid("+value['account']['id']+");'>"+value['account']['username']+"</a> on "+value['modified_at']+"</p>\
-					<p class='post-subtitle'>"+value['content']+"....</p>\
+					<p class='post-subtitle'>"+value['content'].substring(0, 100)+"....</p>\
 					<a href='#' onclick='getpostsbyid("+value['id']+");' class='btn btn-readmore'>Read more</a>\
 				</div>\
 				<hr>\
@@ -99,7 +99,7 @@ function showpostsofuser(){
 						<h2 class='post-title'>"+value['title']+"</h2>\
 					</a>\
 					<p class='post-meta'>Posted by <a href='#' onclick='userinfobyid("+value['account']['id']+");'>"+value['account']['username']+"</a> on "+value['modified_at']+"</p>\
-					<p class='post-subtitle'>"+value['content']+"....</p>\
+					<p class='post-subtitle'>"+value['content'].substring(0, 100)+"....</p>\
 					<a href='#' onclick='getpostsbyid("+value['id']+");' class='btn btn-readmore'>Read more</a>\
 				</div>\
 				<hr>\
@@ -144,7 +144,7 @@ function showallpostsbyuserbyid(userid){
 						<h2 class='post-title'>"+value['title']+"</h2>\
 					</a>\
 					<p class='post-meta'>Posted by <a href='#' onclick='userinfobyid("+value['account']['id']+");'>"+value['account']['username']+"</a> on "+value['modified_at']+"</p>\
-					<p class='post-subtitle'>"+value['content']+"....</p>\
+					<p class='post-subtitle'>"+value['content'].substring(0, 100)+"....</p>\
 					<a href='#' onclick='getpostsbyid("+value['id']+");' class='btn btn-readmore'>Read more</a>\
 				</div>\
 				<hr>\
@@ -202,7 +202,7 @@ function getpostsbyid(postid){
 						<p>"+response['data']['content']+"</p>\
 						<hr>\
 						<div class='comment' id='comment'>\
-							<div name='addCommentForm' id='addCommentForm'>\
+							<form name='addCommentForm' id='addCommentForm' onSubmit='addcomment("+response['data']['id']+"); return false;'>\
 								<div class='row control-group'>\
 									<div class='form-group col-xs-12 floating-label-form-group controls'>\
 										<label>Comment</label>\
@@ -211,13 +211,13 @@ function getpostsbyid(postid){
 									</div>\
 								</div>\
 								<br>\
-								<div id='success'></div>\
+								<p id='error' style='color:red;'></p>\
 								<div class='row'>\
 									<div class='form-group col-xs-12'>\
-										<button type='submit' onclick='addcomment("+response['data']['id']+");' class='btn btn-default'>Add</button>\
+										<button type='submit' class='btn btn-default'>Add</button>\
 									</div>\
 								</div>\
-							</div>\
+							</form>\
 							<div class='comment-list'>\
 								<div class='col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1'>\
 									<div id='comments'><a href='#' onclick='listcomment("+response['data']['id']+");' class='btn btn-show' style='width: 400px;margin-right: -65px;margin-top: 0px;'>Show All Comment</a>\</div>\
@@ -233,32 +233,45 @@ function getpostsbyid(postid){
 		});
 	}
 
-function formcreateposts(){
-	$("#dialog").dialog({
-        autoOpen: false,
+$(function () {
+	$("#dialogcreateposts").dialog({
+        width:500,
+		autoOpen: false,
         modal: true,
+        closeOnEscape: false,
         title: "Create Posts",
         resizable: false,
         buttons: {
         	Save: function () {
-                createposts($('#title').val(), $('#contentposts').val());
+        		if ($('#formcreateposts').valid()) {
+                createposts($('#titleposts').val(), $('#contentposts').val());
                 $(this).dialog('close');
+        		}
             },
             Cancel: function () {
                 $(this).dialog('close');
             }
         }
     });
-	$("#dialog").html("\
-    		<form>\
-    		<label>Title</label>\
-    		<input type='text' id='title'  type='text' value=''/>\
-    		<label>Comment</label>\
-    		<textarea rows='2' id='contentposts'  type='text'></textarea>\
-    		</form>\
-     ");
-    $("#dialog").dialog("open");
-	}
+	  $('#btncreatepost').on('click', function() {
+		  	$('#formcreateposts').show();
+		  	$('#titleposts').val("");
+		  	$('#contentposts').val("");
+		    $('#dialogcreateposts').dialog('open');
+		  });
+	$('#formcreateposts').validate({
+	    rules: {
+	      titleposts: {
+	        required: true,
+	        regex:"^[a-zA-Z0-9_-_\^\$\.\|\?\*\+\(\)\\~`\!@#\-_+={}'>:;, ]{10,100}$"
+	      },
+	      contentposts: {
+		    required: true,
+		    regex:"^[a-zA-Z0-9_-_\^\$\.\|\?\*\+\(\)\\~`\!@#\-_+={}'>:;, ]{10,2048}$",
+		  }
+	    }
+	  });
+	});
 function createposts(title,content){
 	var data = "title="+title+"&content="+content;
         $.ajax({
@@ -302,15 +315,19 @@ function createposts(title,content){
 		});
 	}
 function formupdateposts(id){
-	$("#dialog").dialog({
+	$("#dialogupdateposts").dialog({
+		width:500,
+    	top:100,
         autoOpen: false,
         modal: true,
         title: "Edit Posts",
         resizable: false,
         buttons: {
         	Edit: function () {
-                updateposts(id, $('#title').val(), $('#contentposts').val());
+        		if ($('#formupdateposts').valid()) {
+                updateposts(id, $('#titleupdateposts').val(), $('#contentupdateposts').val());
                 $(this).dialog('close');
+        		}
             },
             Cancel: function () {
                 $(this).dialog('close');
@@ -345,17 +362,24 @@ function formupdateposts(id){
     			}
     		},
             success: function (response) {
-                $("#dialog").html("\
-                		<form>\
-                		<label>Title</label>\
-                		<input type='text' id='title'  type='text' value='"+response['data']['title']+"'/>\
-                		<label>Comment</label>\
-                		<textarea rows='2' id='contentposts'  type='text'>"+response['data']['content']+"</textarea>\
-                		</form>\
-                 ");
-                $("#dialog").dialog("open");
+    		  	$('#formupdateposts').show();
+    		  	$('#titleupdateposts').val(response['data']['title']);
+    		  	$('#contentupdateposts').val(response['data']['content']);
+                $("#dialogupdateposts").dialog("open");
             }
         });
+    $('#formupdateposts').validate({
+	    rules: {
+	      titleupdateposts: {
+	        required: true,
+	        regex:"^[a-zA-Z0-9_-_\^\$\.\|\?\*\+\(\)\\~`\!@#\-_+={}'>:;, ]{10,100}$"
+	      },
+	      contentupdateposts: {
+	    	required: true,
+		    regex:"^[a-zA-Z0-9_-_\^\$\.\|\?\*\+\(\)\\~`\!@#\-_+={}'>:;, ]{10,2048}$",
+		  }
+	    }
+	  });
 	}
 function updateposts(id,title,content){
 	var data = "id="+id+"&title="+title+"&content="+content;
@@ -459,7 +483,16 @@ function deleteposts(id){
 		});
 	}
 function addcomment(id_posts){
-		var data = "id_posts="+id_posts+"&comment="+$('#commentofposts').val();
+		var comment = $('#commentofposts').val();
+		if(!validateComment(comment)){
+			$("#error").text(" 10 character < commment < 254 character and not containt '%&<'"); 
+		}else
+		{
+			$("#error").text("");
+		}
+		if(validateComment(comment))
+		{
+		var data = "id_posts="+id_posts+"&comment="+comment;
       	$.ajax({
 		type: "POST",
 		beforeSend: function (request)
@@ -500,11 +533,14 @@ function addcomment(id_posts){
 			var ct = xhr.getResponseHeader("content-type") || "";
 			if (ct.indexOf('json') > -1) {
 				alert( "comment added!" );
+				$('#commentofposts').val("");
 				listcomment(id_posts);
 				return;
 			}
 		}
 		});
+		}
+		return false;
 	
 	}
 function listcomment(id_posts){
@@ -568,15 +604,19 @@ function listcomment(id_posts){
 	}
 
 function formedit(id,id_posts) {
-    $("#dialog").dialog({
+    $("#dialogeditcomment").dialog({
+    	width:500,
+    	top:100,
         autoOpen: false,
         modal: true,
         title: "Edit Comment",
         resizable: false,
         buttons: {
         	Edit: function () {
-                editcomment(id_posts, id, $('#commentdialog').val());
+        		if ($('#formeditcomment').valid()) {
+                editcomment(id_posts, id, $('#commentforposts').val());
                 $(this).dialog('close');
+        		}
             },
             Cancel: function () {
                 $(this).dialog('close');
@@ -611,15 +651,19 @@ function formedit(id,id_posts) {
     			}
     		},
             success: function (response) {
-                $("#dialog").html("\
-                		<form>\
-                		<label>Comment</label>\
-                		<textarea rows='2' id='commentdialog'  type='text'>"+response['data']['comment']+"</textarea>\
-                		</form>\
-                 ");
-                $("#dialog").dialog("open");
+    		  	$('#formeditcomment').show();
+    		  	$('#commentforposts').val(response['data']['comment']);
+                $("#dialogeditcomment").dialog("open");
             }
         });
+    $('#formeditcomment').validate({
+	    rules: {
+	    	commentforposts: {
+	    	required: true,
+		    regex:"^[a-zA-Z0-9_-_\^\$\.\|\?\*\+\(\)\\~`\!@#\-_+={}'>:;, ]{10,254}$",
+		  }
+	    }
+	  });
 };
 function editcomment(id_posts,id,comment){
 		var data = "id_posts="+id_posts+"&id="+id+"&comment="+comment;
@@ -668,7 +712,6 @@ function editcomment(id_posts,id,comment){
 			if (ct.indexOf('json') > -1) {
 				alert( "comment edited!" );
 				listcomment(id_posts);
-				return;
 			}
 		}
 		});
@@ -726,3 +769,18 @@ function deletecomment(id,id_posts){
 	}
 	});
 }
+
+$.validator.addMethod(
+        "regex",
+        function(value, element, regexp) {
+            var re = new RegExp(regexp);
+            return this.optional(element) || re.test(value);
+        },
+        "Invalid regex exception!!!"
+);
+
+function validateComment(comment) {
+    var re = /^[a-zA-Z0-9_-_\^\$\.\|\?\*\+\(\)\\~`\!@#\-_+={}'>:;, ]{10,254}$/;
+    return re.test(comment);
+}
+

@@ -7,12 +7,12 @@ import javax.ws.rs.FormParam;
 import com.mulodo.miniblog.util.Status;
 
 public class UpdateAccountForm {
-	@NotNull
+    @NotNull
     @Pattern(regexp = Status.LASTNAME_STRING_RANGE)
     @FormParam("lastname")
     public String lastname;
 
-	@NotNull
+    @NotNull
     @Pattern(regexp = Status.FIRSTNAME_STRING_RANGE)
     @FormParam("firstname")
     public String firstname;

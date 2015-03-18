@@ -1,8 +1,7 @@
-
-#dialog label {
-	color: blue;
+#formcreateposts,#formupdateposts,#formeditcomment {
+	display:none;
 }
-#title {
+#titleposts,#titleupdateposts {
 	margin-top:5px;
 	margin-bottom:20px;
 	width:96%;
@@ -10,7 +9,7 @@
 	border:black 1px solid;
 	padding:5px 0
 }
-#commentdialog,#contentposts {
+#commentforposts,#contentposts,#contentupdateposts {
 	margin-top:5px;
 	margin-bottom:20px;
 	width:96%;
@@ -20,6 +19,12 @@
 	resize: none;
 	position: relative;
 }
-#title,#contentposts,#commentdialog {
+#titleposts,#contentposts,#commentforposts {
 	padding-left:10px
+}
+.error {
+  color: red;
+}
+.ui-dialog .ui-dialog-titlebar-close {
+    visibility: hidden;
 }

@@ -26,6 +26,7 @@ public class AccountControllerTest implements AccountService{
 		if(username.equals("login200")) {
 			acc.setUsername("login200");
 			token.setAccess_token("login");
+			token.setAccount(acc);
 			return token;
 		}
 		return null;

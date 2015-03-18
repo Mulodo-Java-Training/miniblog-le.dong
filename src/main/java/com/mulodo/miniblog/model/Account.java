@@ -17,8 +17,10 @@ import javax.persistence.TemporalType;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
-import com.mulodo.miniblog.config.AccountDateDeserialize;
+import com.mulodo.miniblog.util.CustomJsonDateDeserializer;
+import com.mulodo.miniblog.util.CustomJsonDateSeralizer;
 
 @Entity
 @Table(name = "account")
@@ -45,12 +47,14 @@ public class Account {
 
 	@Column(columnDefinition = "TIMESTAMP(0) default CURRENT_TIMESTAMP")
 	@Temporal(TemporalType.TIMESTAMP)
-	@JsonDeserialize(using = AccountDateDeserialize.class)
+	@JsonSerialize(using = CustomJsonDateSeralizer.class)
+	@JsonDeserialize(using = CustomJsonDateDeserializer.class)
 	private Date create_at;
 
 	@Column(columnDefinition = "TIMESTAMP(0) default CURRENT_TIMESTAMP")
 	@Temporal(TemporalType.TIMESTAMP)
-	@JsonDeserialize(using = AccountDateDeserialize.class)
+	@JsonSerialize(using = CustomJsonDateSeralizer.class)
+	@JsonDeserialize(using = CustomJsonDateDeserializer.class)
 	private Date modified_at;
 
 	@OneToMany(targetEntity = Posts.class, mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

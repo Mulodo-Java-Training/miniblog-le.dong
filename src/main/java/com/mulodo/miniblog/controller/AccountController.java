@@ -61,7 +61,7 @@ public class AccountController {
 		}
 		json.meta.code(200);
 		json.meta.description = "login success";
-		json.data = new AccessToken(token.getAccess_token());
+		json.data = new AccessToken(token.getAccess_token(),token.getAccount().getId(),token.getAccount().getUsername());
 		return Response.status(Status.STATUS_200).entity(json).build();
 	}
 
@@ -95,8 +95,14 @@ public class AccountController {
 
 	@GET
 	@Path("getuser/{id}")
-	public Response getInfo(@PathParam("id") int id) {
+	public Response getInfo(@HeaderParam("token") String accesstoken,@PathParam("id") int id) {
 		ReturnFormat json = new ReturnFormat();
+		int rs = tokenService.checkExpiredDate(accesstoken);
+        if (rs > 0) {
+            tokenService.deleteToken(accesstoken);
+            json.meta.code(2011);
+            return Response.status(Status.STATUS_2008).entity(json).build();
+        }
 		if (id <= 0) {
 			json.meta.code(1001);
 			return Response.status(Status.STATUS_1001).entity(json).build();
@@ -133,7 +139,6 @@ public class AccountController {
 		return Response.status(Status.STATUS_200).entity(json).build();
 	}
 
-	// method update info account
 	@PUT
 	@Path("updateuser")
 	@ValidateRequest

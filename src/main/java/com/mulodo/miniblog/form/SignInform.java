@@ -7,7 +7,7 @@ import javax.ws.rs.FormParam;
 import com.mulodo.miniblog.util.Status;
 
 public class SignInform {
-	@NotNull
+    @NotNull
     @Pattern(regexp = Status.USERNAME_STRING_RANGE)
     @FormParam("username")
     public String username;

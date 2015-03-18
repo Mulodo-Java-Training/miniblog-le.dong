@@ -168,6 +168,25 @@ public class CommentsController {
 	}
 
 	@GET
+    @Path("/comment/getcomment/{id}")
+    public Response get(@PathParam("id") int id) {
+        ReturnFormat json = new ReturnFormat();
+        if (id <= 0) {
+            json.meta.code(1001);
+            return Response.status(Status.STATUS_1001).entity(json).build();
+        }
+        Comments c = commentsService.get(id);
+        if (c == null) {
+            json.meta.code(4004);
+            return Response.status(Status.STATUS_4004).entity(json).build();
+        }
+        json.meta.code(200);
+        json.meta.description = "get comments success!";
+        json.data = c;
+        return Response.status(Status.STATUS_200).entity(json).build();
+    }
+	
+	@GET
 	@Path("/comments/getcommentsofuser")
 	public Response getCommentsOfUser(@HeaderParam("token") String accesstoken) {
 		ReturnFormat json = new ReturnFormat();

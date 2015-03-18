@@ -52,6 +52,7 @@ function searchuser(name){
 		}
 		});
 	}
+
 function searchposts(description){
     $.ajax({
 	type: "GET",

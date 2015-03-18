@@ -87,14 +87,20 @@ public class AccountControllerLayerTest {
 	}
 
 	@Test
+    public void AccountController_GetInfo_2008() {
+        Response respone = accountController.getInfo("expired",1);
+        assertEquals(Status.STATUS_2008, respone.getStatus());
+    }
+	
+	@Test
 	public void AccountController_GetInfo_2006() {
-		Response respone = accountController.getInfo(9999);
+		Response respone = accountController.getInfo("token",9999);
 		assertEquals(Status.STATUS_2006, respone.getStatus());
 	}
 
 	@Test
 	public void AccountController_GetInfo_200() {
-		Response respone = accountController.getInfo(1);
+		Response respone = accountController.getInfo("token",1);
 		assertEquals(Status.STATUS_200, respone.getStatus());
 	}
 

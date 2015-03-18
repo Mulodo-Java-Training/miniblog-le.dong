@@ -7,12 +7,12 @@ import javax.ws.rs.FormParam;
 import com.mulodo.miniblog.util.Status;
 
 public class ChangePasswordForm {
-	@NotNull
+    @NotNull
     @Pattern(regexp = Status.PASSWORD_STRING_RANGE)
     @FormParam("old_password")
     public String old_password;
 	
-	@NotNull
+    @NotNull
     @Pattern(regexp = Status.PASSWORD_STRING_RANGE)
     @FormParam("new_password")
     public String new_password;

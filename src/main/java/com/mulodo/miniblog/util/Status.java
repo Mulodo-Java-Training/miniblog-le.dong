@@ -3,28 +3,24 @@ package com.mulodo.miniblog.util;
 public class Status {
 	
 	//validation
-	
-	public final static String USERNAME_STRING_RANGE = "[a-z0-9]{6,32}";
+    
+	public final static String USERNAME_STRING_RANGE = "[a-zA-Z0-9]{6,32}";
 
-    public final static String PASSWORD_STRING_RANGE = "[A-Za-z0-9]{6,72}";
+    public final static String PASSWORD_STRING_RANGE = "[a-zA-Z0-9]{6,72}";
 
-    public final static String FIRSTNAME_STRING_RANGE = "[A-Za-z0-9]{1,32}";
+    public final static String FIRSTNAME_STRING_RANGE = "[a-zA-Z0-9]{1,32}";
 
-    public final static String LASTNAME_STRING_RANGE = "[A-Za-z0-9]{1,32}";
+    public final static String LASTNAME_STRING_RANGE = "[a-zA-Z0-9]{1,32}";
     
     public final static String EMAIL_STRING_RANGE = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
-    public final static String ACCESS_TOKEN_STRING_RANGE = "[a-f0-9]{64}";
+    public final static String USERNAME_SEARCH_RANGE = "[a-zA-Z0-9]{1,32}";
 
-    public final static String USERNAME_SEARCH_RANGE = "[a-z0-9]{1,32}";
+    public final static String POST_TITLE_STRING_RANGE = "^[a-zA-Z0-9_-_\\^\\$\\.\\|\\?\\*\\+\\(\\)\\~`\\!@#\\-_+={}'>:;, ]{10,100}$";
 
-    public final static String POST_TITLE_STRING_RANGE = "[\\p{Print}&&[^~,]]{10,100}";
+    public final static String POST_CONTENT_STRING_RANGE = "^[a-zA-Z0-9_-_\\^\\$\\.\\|\\?\\*\\+\\(\\)\\~`\\!@#\\-_+={}'>:;, ]{10,2048}$";
 
-    public final static String POST_TITLE_SEARCH_RANGE = "[\\p{Print}&&[^~,]]{1,100}";
-
-    public final static String POST_CONTENT_STRING_RANGE = "[\\p{Print}&&[^~,]]{10,2048}";
-
-    public final static String COMMENT_STRING_RANGE = "[\\p{Print}&&[^~,]]{1,254}";
+    public final static String COMMENT_STRING_RANGE = "^[a-zA-Z0-9_-_\\^\\$\\.\\|\\?\\*\\+\\(\\)\\~`\\!@#\\-_+={}'>:;, ]{10,254}$";
 
     public final static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	
