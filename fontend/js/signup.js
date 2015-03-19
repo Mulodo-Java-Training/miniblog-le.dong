@@ -32,7 +32,7 @@ function signup(){
   	$.ajax({
 	type: "POST",
 	data: data,
-	url: "http://localhost:8080/MiniBlog/register",
+	url: $url+"register",
     statusCode: {
 		1001: function() {
 			alert( "validate error" );

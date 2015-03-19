@@ -10,7 +10,7 @@ function toppost(){
             {
                 request.setRequestHeader("token", getCookie('token'));
             },
-		url: "http://localhost:8080/MiniBlog/top",
+		url: $url+"top",
         statusCode: {
 			1001: function() {
 				alert( "validate error" );
@@ -63,7 +63,7 @@ function showpostsofuser(){
             {
                 request.setRequestHeader("token", getCookie('token'));
             },
-		url: "http://localhost:8080/MiniBlog/getpostsofuser",
+		url: $url+"getpostsofuser",
         statusCode: {
 			1001: function() {
 				alert( "validate error" );
@@ -116,7 +116,7 @@ function showallpostsbyuserbyid(userid){
             {
                 request.setRequestHeader("token", getCookie('token'));
             },
-		url: "http://localhost:8080/MiniBlog/getpostsbyuser/"+userid,
+		url: $url+"getpostsbyuser/"+userid,
         statusCode: {
 			1001: function() {
 				alert( "validate error" );
@@ -162,7 +162,7 @@ function getpostsbyid(postid){
             {
                 request.setRequestHeader("token", getCookie('token'));
             },
-		url: "http://localhost:8080/MiniBlog/getposts/"+postid,
+		url: $url+"getposts/"+postid,
         statusCode: {
 			1001: function() {
 				alert( "validate error" );
@@ -281,7 +281,7 @@ function createposts(title,content){
             {
                 request.setRequestHeader("token", getCookie('token'));
             },
-		url: "http://localhost:8080/MiniBlog/create",
+		url: $url +"create",
         statusCode: {
 			1001: function() {
 				alert( "validate error" );
@@ -342,7 +342,7 @@ function formupdateposts(id){
                 request.setRequestHeader("token", getCookie('token'));
              
             },
-            url: "http://localhost:8080/MiniBlog/getposts/"+id,
+            url: $url+"getposts/"+id,
             statusCode: {
     			1001: function() {
     				alert( "validate error" );
@@ -390,7 +390,7 @@ function updateposts(id,title,content){
             {
                 request.setRequestHeader("token", getCookie('token'));
             },
-		url: "http://localhost:8080/MiniBlog/updateposts/"+id,
+		url: $url+"updateposts/"+id,
         statusCode: {
 			1001: function() {
 				alert( "validate error" );
@@ -440,7 +440,7 @@ function deleteposts(id){
             {
                 request.setRequestHeader("token", getCookie('token'));
             },
-		url: "http://localhost:8080/MiniBlog/deleteposts/"+id,
+		url: $url+"deleteposts/"+id,
         statusCode: {
 			1001: function() {
 				alert( "validate error" );
@@ -500,7 +500,7 @@ function addcomment(id_posts){
                 request.setRequestHeader("token", getCookie('token'));
             },
 		data: data,
-		url: "http://localhost:8080/MiniBlog/posts/"+id_posts+"/comments/add",
+		url: $url+"posts/"+id_posts+"/comments/add",
         statusCode: {
 			1001: function() {
 				alert( "validate error" );
@@ -550,7 +550,7 @@ function listcomment(id_posts){
             {
                 request.setRequestHeader("token", getCookie('token'));
             },
-		url: "http://localhost:8080/MiniBlog/posts/"+id_posts+"/comments/getcommentsofposts",
+		url: $url+"posts/"+id_posts+"/comments/getcommentsofposts",
         statusCode: {
 			1001: function() {
 				alert( "validate error" );
@@ -631,7 +631,7 @@ function formedit(id,id_posts) {
                 request.setRequestHeader("token", getCookie('token'));
              
             },
-            url: "http://localhost:8080/MiniBlog/posts/comment/getcomment/"+id,
+            url: $url+"posts/comment/getcomment/"+id,
             statusCode: {
     			1001: function() {
     				alert( "validate error" );
@@ -674,7 +674,7 @@ function editcomment(id_posts,id,comment){
                 request.setRequestHeader("token", getCookie('token'));
             },
 		data: data,
-		url: "http://localhost:8080/MiniBlog/posts/"+id_posts+"/comments/update/"+id,
+		url: $url+"posts/"+id_posts+"/comments/update/"+id,
         statusCode: {
 			1001: function() {
 				alert( "validate error" );
@@ -726,7 +726,7 @@ function deletecomment(id,id_posts){
             request.setRequestHeader("token", getCookie('token'));
         },
 	data: data,
-	url: "http://localhost:8080/MiniBlog/posts/"+id_posts+"/comments/delete/"+id,
+	url: $url+"posts/"+id_posts+"/comments/delete/"+id,
     statusCode: {
 		1001: function() {
 			alert( "validate error" );

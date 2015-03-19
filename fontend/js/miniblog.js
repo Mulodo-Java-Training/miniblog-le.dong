@@ -11,7 +11,7 @@ function profile(){
             {
                 request.setRequestHeader("token", getCookie('token'));
             },
-		url: "http://localhost:8080/MiniBlog/profile",
+		url: $url+"profile",
         statusCode: {
 			1001: function() {
 				alert( "validate error" );
@@ -109,7 +109,7 @@ function userinfobyid(id){
             {
                 request.setRequestHeader("token", getCookie('token'));
             },
-		url: "http://localhost:8080/MiniBlog/getuser/"+id,
+		url: $url+"getuser/"+id,
         statusCode: {
 			1001: function() {
 				alert( "validate error" );
@@ -266,7 +266,7 @@ function update(){
             {
                 request.setRequestHeader("token", getCookie('token'));
             },
-		url: "http://localhost:8080/MiniBlog/updateuser",
+		url: $url+"updateuser",
         statusCode: {
 			1001: function() {
 				alert( "validate error" );
@@ -372,7 +372,7 @@ function changepass(){
             {
                 request.setRequestHeader("token", getCookie('token'));
             },
-		url: "http://localhost:8080/MiniBlog/changepass",
+		url: $url+"changepass",
         statusCode: {
 			1001: function() {
 				alert( "validate error" );
@@ -420,7 +420,7 @@ function logout() {
             request.setRequestHeader("token", getCookie('token'));
          
         },
-	url: "http://localhost:8080/MiniBlog/logout",
+	url: $url+"logout",
     statusCode: {
 		1001: function() {
 			alert( "validate error" );

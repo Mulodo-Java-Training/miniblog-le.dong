@@ -6,7 +6,7 @@ function searchuser(name){
             {
                 request.setRequestHeader("token", getCookie('token'));
             },
-		url: "http://localhost:8080/MiniBlog/searchuser/"+name,
+		url: $url +"searchuser/"+name,
         statusCode: {
 			1001: function() {
 				alert( "validate error" );
@@ -60,7 +60,7 @@ function searchposts(description){
         {
             request.setRequestHeader("token", getCookie('token'));
         },
-	url: "http://localhost:8080/MiniBlog/searchposts/"+description,
+	url: $url+"searchposts/"+description,
     statusCode: {
 		1001: function() {
 			alert( "validate error" );

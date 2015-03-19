@@ -22,7 +22,7 @@ function signin(){
       	$.ajax({
 		type: "POST",
 		data: data,
-		url: "http://localhost:8080/MiniBlog/login",
+		url: $url+"login",
         statusCode: {
 			1001: function() {
 				alert( "validate error" );
@@ -69,7 +69,7 @@ function toppost(){
         {
             request.setRequestHeader("token", getCookie('token'));
         },
-	url: "http://localhost:8080/MiniBlog/top",
+	url: $url+"top",
     statusCode: {
 		1001: function() {
 			alert( "validate error" );
