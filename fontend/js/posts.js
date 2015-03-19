@@ -263,7 +263,7 @@ $(function () {
 	    rules: {
 	      titleposts: {
 	        required: true,
-	        regex:"^[a-zA-Z0-9_-_\^\$\.\|\?\*\+\(\)\\~`\!@#\-_+={}'>:;, ]{10,100}$"
+	        regex:"^[a-zA-Z0-9_-_ ]{10,100}$"
 	      },
 	      contentposts: {
 		    required: true,

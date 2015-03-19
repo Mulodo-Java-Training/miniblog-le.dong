@@ -16,7 +16,7 @@ public class Status {
 
     public final static String USERNAME_SEARCH_RANGE = "[a-zA-Z0-9]{1,32}";
 
-    public final static String POST_TITLE_STRING_RANGE = "^[a-zA-Z0-9_-_\\^\\$\\.\\|\\?\\*\\+\\(\\)\\~`\\!@#\\-_+={}'>:;, ]{10,100}$";
+    public final static String POST_TITLE_STRING_RANGE = "^[a-zA-Z0-9_-_ ]{10,100}$";
 
     public final static String POST_CONTENT_STRING_RANGE = "^[a-zA-Z0-9_-_\\^\\$\\.\\|\\?\\*\\+\\(\\)\\~`\\!@#\\-_+={}'>:;, ]{10,2048}$";
 
