@@ -195,7 +195,7 @@ function getpostsbyid(postid){
 				$('#header').html(""+response['data']['title']);
 				$('#content').html("\
 				<p class='post-meta' style='text-align: center;'>Posted by <a href='#' onclick='userinfobyid("+response['data']['account']['id']+");'>"+response['data']['account']['username']+"</a> on "+response['data']['create_at']+"</p>\
-				<a href='#' onclick='formupdateposts("+response['data']['id']+");' class='btn btn-default' style='margin-left: 270px;margin-right: 20px;'>Edit</a>\
+				<a href='#' id='btneditposts' onclick='formupdateposts("+response['data']['id']+");' class='btn btn-default'>Edit</a>\
 				<a href='#' onclick='deleteposts("+response['data']['id']+");' class='btn btn-default'>Delete</a>\
 				<div class='row'>\
 					<div class='col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1'>\
@@ -220,7 +220,7 @@ function getpostsbyid(postid){
 							</form>\
 							<div class='comment-list'>\
 								<div class='col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1'>\
-									<div id='comments'><a href='#' onclick='listcomment("+response['data']['id']+");' class='btn btn-show' style='width: 400px;margin-right: -65px;margin-top: 0px;'>Show All Comment</a>\</div>\
+									<div id='comments'><a href='#' onclick='listcomment("+response['data']['id']+");' class='btn btn-show'>Show All Comment</a>\</div>\
 									<hr>\
 								</div>\
 							</div>\
@@ -587,12 +587,14 @@ function listcomment(id_posts){
 						</div>\
 					</div>\
 					<p class='comment-meta'>comment on "+value['create_at']+"  | author: <a href='#' onclick='userinfobyid("+value['account']['id']+");'>"+value['account']['username']+"</a>\
-						<li class='dropdown' style='float: right; margin-top: -60px; list-style-type: none;margin-right: -120px;'><a class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'> <img src='img/edit_32.png' alt='Edit or Delete' width='20px;' height='20px;' /></a>\
+						<ul>\
+						<li class='dropdown' id='optioncomment'><a class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'> <img src='img/edit_32.png' alt='Edit or Delete' width='20px;' height='20px;' /></a>\
 							<ul class='dropdown-menu' role='menu'>\
 								<li><a href='#' onclick='formedit("+value['id']+","+id_posts+");'>Edit</a></li>\
 								<li><a href='#' onclick='deletecomment("+value['id']+","+id_posts+");'>Delete</a></li>\
 							</ul>\
 						</li>\
+						</ul>\
 					</p>\
 					<p class='comment-content'>"+value['comment']+"</p>\
 				</div>\
